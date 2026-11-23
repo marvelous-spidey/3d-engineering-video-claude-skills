@@ -1,7 +1,7 @@
 """Cara kerja kolam renang (ID, 9:16, 68.4 s) - example job for kit v1.0. Scene and animation are built from code; every cue follows
 the voice-over word timings in words.json, so re-timing the narration moves the animation with it.
 
-Make a runnable job folder first (copies the kit code next to this script):   bash kit/newjob.sh examples/video02-kolam-renang-id
+Make a runnable job folder first (copies the kit code next to this script):   bash kit/newjob.sh examples/video02-swimming-pool-id
   python3 pool_video.py still 270 480 4 out_dir 3.6 27.2 47.6     quick stills at those seconds (CPU)
   python3 pool_video.py anim 1080 1920 64 frames 1 2052 [step]    all frames (box/render.sh calls this)
   python3 pool_video.py blend 1080 1920 64 pool.blend             save the scene for Blender

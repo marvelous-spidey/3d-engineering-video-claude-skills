@@ -1,5 +1,5 @@
-# ZIP skill
+# Skill ZIP files
 
-Satu ZIP untuk tiap skill di `skills/`, siap diunggah ke Claude: **Customize > Skills > + > Create skill > Upload a skill**. Unggah ketiganya.
+One ZIP for each skill in `skills/`, ready to upload to Claude: **Customize > Skills > + > Create skill > Upload a skill**. Upload all three.
 
-ZIP dibuat dari `skills/` dengan `python3 dist/make_dist.py`. Kalau `SKILL.md` diubah, jalankan lagi perintah itu sebelum commit.
+The ZIP files are built from `skills/` with `python3 dist/make_dist.py`. If you change a `SKILL.md`, run that command again before you commit.

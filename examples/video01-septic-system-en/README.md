@@ -1,44 +1,44 @@
-# Contoh 01 — How a Septic System Works (EN)
+# Example 01: How a Septic System Works (EN)
 
-Short 9:16, 1080×1920, 30 fps, 66 detik, narasi bahasa Inggris, caption frasa yang terisi kata demi kata, potongan kamera keras per beat. Ini video pertama, dibuat sebelum kit ada: `septic_video.py` berdiri sendiri (902 baris) dan menjadi sumber fungsi `kit/explainer_kit.py`.
+A 9:16 short, 1080x1920, 30 fps, 66 seconds, with English narration, phrase captions that fill in word by word, and a hard camera cut per beat. This is the first video, made before the kit existed: `septic_video.py` is standalone (902 lines) and is the source of the functions in `kit/explainer_kit.py`.
 
 ![Contact sheet 1](preview/contact_sheet_1.jpg)
 ![Contact sheet 2](preview/contact_sheet_2.jpg)
 
-## Isi
+## Contents
 
-| Berkas | Isi |
+| File | Contents |
 |---|---|
-| `septic_video.py` | seluruh scene dan animasi, 710 objek. Waktu kata narasi tertanam di daftar `WORDS` |
-| `script_en.md` | naskah, gambar per baris, frasa caption dengan waktunya, cek fakta dan sumber, penyederhanaan yang disengaja |
-| `job.env`, `script.txt`, `words.json` | berkas job untuk `kit/captions.py` gaya `phrases`. Tanda ` / ` di `script.txt` menandai batas frasa; hasilnya 66 frasa dengan teks dan waktu yang sama dengan video aslinya |
-| `preview/` | contact sheet dari render pratinjau CPU dengan caption |
+| `septic_video.py` | the whole scene and animation, 710 objects. The word timings of the narration are embedded in the `WORDS` list |
+| `script_en.md` | the script, the picture for each line, the caption phrases with their timings, the fact check with sources, and the deliberate simplifications |
+| `job.env`, `script.txt`, `words.json` | job files for `kit/captions.py` in the `phrases` style. The ` / ` marks in `script.txt` set the phrase breaks; the result is 66 phrases with the same text and timing as the original video |
+| `preview/` | contact sheets from the CPU preview render, with captions |
 
-File suara tidak disertakan.
+The audio file is not included.
 
-## Mencoba tanpa kredit
+## Try it without credits
 
 ```bash
 cp -r examples/video01-septic-system-en ~/jobs/septic && bash kit/newjob.sh ~/jobs/septic && cd ~/jobs/septic
-python3 septic_video.py still 540 960 16 st 21.3 37.6 61.5       # still pada detik itu, CPU
-python3 captions.py test st/t_03760.png 37.6 st/c_03760.png      # caption gaya phrases di atas still
-python3 septic_video.py blend 1080 1920 64 septic.blend          # simpan scene untuk dibuka di Blender 5.3
+python3 septic_video.py still 540 960 16 st 21.3 37.6 61.5       # stills at those seconds, on CPU
+python3 captions.py test st/t_03760.png 37.6 st/c_03760.png      # a phrases-style caption on top of a still
+python3 septic_video.py blend 1080 1920 64 septic.blend          # save the scene to open in Blender 5.3
 ```
 
-Skrip ini tidak memakai `job.env` dan tidak mengenal mode `list`, jadi tidak cocok dengan skrip `kit/box/` versi 1.0. Untuk video baru, mulai dari `kit/scene_template.py` atau dari contoh 02; pakai skrip ini sebagai bacaan untuk potongan keras, label di bidang potong, dan truk.
+This script does not use `job.env` and has no `list` mode, so it does not work with the `kit/box/` scripts. For a new video, start from `kit/scene_template.py` or from example 02, and read this script for hard cuts, labels on the cut face, and the truck.
 
-## Angka produksi (21 November 2026)
+## Production numbers (21 November 2026)
 
-| Hal | Nilai |
+| Item | Value |
 |---|---|
-| Render | 1.980 frame, Cycles OptiX 64 sampel + denoise, 1× L40S sewaan, 3 proses paralel: 27 menit 20 detik |
-| Suara | ElevenLabs v4 lewat Higgsfield, preset "Cillian", 171 kata, 64,4 detik |
-| Kredit Higgsfield | suara 4,37 + GPU 43,72 = 48,09 |
+| Render | 1,980 frames, Cycles with OptiX at 64 samples + denoise, 1x rented L40S, 3 parallel processes: 27 minutes 20 seconds |
+| Voice | ElevenLabs v4 through Higgsfield, preset "Cillian", 171 words, 64.4 seconds |
+| Higgsfield credits | voice 4.37 + GPU 43.72 = 48.09 |
 
-Catatan lengkapnya ada di [`docs/video01-production-record.md`](../../docs/video01-production-record.md).
+The full record is in [`docs/video01-production-record.md`](../../docs/video01-production-record.md).
 
-## Batas
+## Limits
 
-- Hanya narasi; tanpa musik dan efek suara.
-- Beberapa caption muncul 0,3–0,5 detik sebelum katanya (kata "and" setelah koma). Penyebabnya sudah diperbaiki di `kit/audio/align.py` v1.0; `words.json` di sini sengaja dibiarkan sama dengan produksi.
-- Video ini dirender dengan persistent data Cycles menyala. Kit sekarang mematikannya, karena pada video kedua opsi itu merusak sebagian frame.
+- Narration only; no music or sound effects.
+- Some captions appear 0.3 to 0.5 seconds before their word (the word "and" after a comma). The cause has been fixed in `kit/audio/align.py` v1.0; the `words.json` here is deliberately left as it was in production.
+- This video was rendered with Cycles persistent data turned on. The kit now turns it off, because in the second video that option corrupted some of the frames.

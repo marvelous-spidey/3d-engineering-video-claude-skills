@@ -1,122 +1,122 @@
-# Panduan kerja kit v1.1 — rujukan untuk skill
+# Kit v1.1 working guide: reference for the skills
 
-Dibaca per bagian saat dibutuhkan. Perintah di sini berlaku untuk kit v1.1 (yang baru dari video #3 ditandai "v1.1"). `docs/pipeline-runbook.md` (v0.3) di repo adalah latar belakang dan riwayat; perintah di dalamnya versi lama.
+Read one section at a time, when you need it. The commands here are for kit v1.1; what came out of video #3 is marked "v1.1". `docs/pipeline-runbook.md` (v0.3) in the repo is background and history, and its commands are from an older version.
 
-## 1. Menulis scene
+## 1. Writing a scene
 
-**Konvensi.** Satuan meter. Bidang potong di y = 0, kamera melihat ke arah +Y, Z ke atas, tanah di z = 0. Lensa 36 mm pada sensor 36 mm: tinggi bingkai = jarak kamera, lebar = 0,5625 × jarak. Subjek di 15–60% tinggi layar; caption di 67–70%; 20% terbawah tertutup tombol aplikasi. Nama objek berawalan kelompok (`ENV_`, `PIPE_`, `TAG_`), karena nama itu muncul di laporan scan.
+**Conventions.** Units are metres. The cut face is the plane y = 0, the camera looks along +Y, Z is up, and the ground is at z = 0. The lens is 36 mm on a 36 mm sensor, so the frame is as tall as the camera distance and 0.5625 times that wide. Keep the subject between 15% and 60% of the frame height. Captions sit at 67 to 70%, and platform buttons cover the bottom 20%. Name objects with a group prefix (`ENV_`, `PIPE_`, `TAG_`), because those names show up in the scan reports.
 
-**Waktu.** Semua cue berupa variabel `T_… = T(id_kalimat, kata, ke, end)`. Kata harus persis seperti di naskah ("air" tidak menemukan "airnya"). Tidak ada detik yang diketik tangan; pergeseran ditulis relatif (`T_PUMP - 0.4`).
+**Time.** Every cue is a variable `T_... = T(sentence_id, word, nth, end)`. The word must match the script exactly ("air" does not find "airnya"). No seconds are typed by hand; offsets are written relative to a cue (`T_PUMP - 0.4`).
 
-**Aturan gambar.** Satu kalimat = satu perubahan di layar. Benda muncul saat disebut, tidak sebelumnya. Istilah teknis diberi tag saat diucapkan. Rantai sebab-akibat digambar sebagai gerak: air mengalir, level naik, dinding ambruk, panah menekan.
+**Picture rules.** One sentence is one change on screen. An object appears when it is named, not before. A technical term gets a tag when it is spoken. Draw cause and effect as motion: water flows, a level rises, a wall collapses, an arrow pushes.
 
-**Kosakata** (argumen: `grep -n "^def " explainer_kit.py scene_extras.py` atau `API.md`):
+**Vocabulary** (for arguments: `grep -n "^def " explainer_kit.py scene_extras.py`, or `API.md`):
 
-| Kebutuhan | Fungsi |
+| Need | Functions |
 |---|---|
-| Bentuk | `box`, `cyl`, `sphere`, `prism`, `prismp`, `prism_yz`, `patch`, `patchp`, `tube`, `pipe`, `hinge`, `capsule`, `empty` |
-| Muncul dan hilang | `hidden_until`, `appear`, `pop`, `vanish`, `grow`, `show`, `extend` (pipa menggambar dirinya) |
-| Gerak | `travel`, `key`, `pulse`, `key_input` (nilai material), `tint` (warna + alpha) |
-| Air | `water_material`, `level_box` + `water_body` + `level` (permukaan naik-turun, lantai miring pun benar) |
-| Aliran di pipa | `flow(nama, front(titik), t0, t1)` |
-| Teks | `label(..., billboard=True)` untuk tag, `sign`, `text`; panah: `arrow` |
-| Karakter | `make_char` (maskot seri: helm kuning, rompi oranye), `arm`, `raise_arms`; hiasan: `tree`, `palm` |
-| Kamera | `orbit(azimut, elevasi, jarak, target)`, `pose`, `shot(t0, t1, pose, mv=…, cut=…)`, `project(pose, titik)` |
-| Dunia | `sun_d.energy` / `sun_d.color` dan `sky` bisa di-keyframe (senja, mendung) |
+| Shapes | `box`, `cyl`, `sphere`, `prism`, `prismp`, `prism_yz`, `patch`, `patchp`, `tube`, `pipe`, `hinge`, `capsule`, `empty` |
+| Appearing and disappearing | `hidden_until`, `appear`, `pop`, `vanish`, `grow`, `show`, `extend` (a pipe that draws itself) |
+| Motion | `travel`, `key`, `pulse`, `key_input` (material values), `tint` (colour and alpha) |
+| Water | `water_material`, `level_box` + `water_body` + `level` (a surface that rises and falls, correct even on a sloped floor) |
+| Flow in a pipe | `flow(name, front(points), t0, t1)` |
+| Text | `label(..., billboard=True)` for tags, `sign`, `text`; arrows: `arrow` |
+| Characters | `make_char` (the series mascot: yellow helmet, orange vest), `arm`, `raise_arms`; set dressing: `tree`, `palm` |
+| Camera | `orbit(azimuth, elevation, distance, target)`, `pose`, `shot(t0, t1, pose, mv=..., cut=...)`, `project(pose, point)` |
+| World | `sun_d.energy` / `sun_d.color` and `sky` can be keyframed (dusk, overcast) |
 
-**Kamera.** `shot()` bergerak mulus dari pose sebelumnya lalu drift pelan; `cut=True` memotong keras. Ikuti gaya referensi: potongan keras per beat (video #1) atau satu gerak sinambung (video #2). Hitung posisi layar dengan `project()` sebelum merender, supaya tag tidak menutupi subjek dan subjek tidak jatuh ke daerah caption.
+**Camera.** `shot()` eases from the previous pose and then drifts slowly; `cut=True` makes a hard cut. Follow the style of the reference: a hard cut per beat (video #1) or one continuous move (video #2). Compute screen positions with `project()` before rendering, so that tags do not cover the subject and the subject does not fall into the caption area.
 
-**Aturan keyframe Blender 5.3 yang pernah merusak render:**
+**Blender 5.3 keyframe rules that have ruined a render:**
 
-1. Menyisipkan kunci pada frame yang sudah punya kunci **mengganti** kunci itu. Gerak berulang "sampai di ujung lalu lompat ke awal" menaruh kunci ujung 0,004 detik sebelum putaran berikutnya (`flow()` sudah begitu).
-2. Kunci ketiga dan seterusnya mewarisi interpolasi kunci sebelumnya. Setelah `show()` atau `extend()` (kunci CONSTANT), beri `ip` eksplisit: `pulse(o, t0, t1, ip='BEZIER')`.
-3. BEZIER otomatis di samping kunci "sembunyi" menunda gerak. Pakai `ip='SINE', ease='EASE_IN_OUT'`.
-4. Dua permukaan sebidang tampil hitam: geser salah satunya 4 mm. Transparansi bertumpuk: bidang satu sisi.
-5. Objek "tumbuh" dari skala nol tetap terlihat sebagai lembaran: sembunyikan sampai cue (`grow` dan `pop` sudah melakukannya).
-6. (v1.1) `pop(o, t)` menaruh kunci terakhirnya di `t + dur` (bawaan 0,28 detik). `vanish()` yang selesai sebelum itu kalah: benda muncul lagi dan menetap. Untuk benda yang tampil kurang dari ±0,4 detik (angka penghitung yang berganti cepat), pendekkan `dur` pada `pop` dan `vanish`, lalu baca jadwalnya di `scene_check.py`.
+1. Inserting a key on a frame that already has one **replaces** it. A looping motion that "reaches the end, then jumps to the start" must put the end key 0.004 seconds before the next loop (`flow()` already does).
+2. The third and later keys inherit the interpolation of the key before them. After `show()` or `extend()` (CONSTANT keys), pass `ip` explicitly: `pulse(o, t0, t1, ip='BEZIER')`.
+3. An automatic BEZIER handle next to a "hidden" key delays the motion. Use `ip='SINE', ease='EASE_IN_OUT'`.
+4. Two coplanar surfaces render black: move one of them by 4 mm. For stacked transparency, use single-sided planes.
+5. An object "growing" from zero scale is still visible as a thin sheet: hide it until its cue (`grow` and `pop` already do).
+6. (v1.1) `pop(o, t)` puts its last key at `t + dur` (0.28 seconds by default). A `vanish()` that finishes before that loses: the object comes back and stays. For anything on screen for less than about 0.4 seconds (a counter that changes quickly), shorten `dur` on both `pop` and `vanish`, then read the timetable in `scene_check.py`.
 
-**Pola dari video #3 (v1.1).** Contoh kodenya ada di `examples/video03-mesin-crv-id/engine_video.py`; fungsi yang disebut di bawah didefinisikan di skrip itu, belum di kit.
+**Patterns from video #3 (v1.1).** The code is in `examples/video03-crv-engine-id/engine_video.py`. The functions named below are defined in that script and are not in the kit yet.
 
-- **Gerak mekanis berulang** (mesin, pompa, roda gigi): buat satu kurva sudut untuk seluruh video, yaitu integral profil kecepatan per kalimat, lalu hitung posisi semua komponen dari sudut itu dan tulis satu kunci linear per frame (`bake`, `bake_input`). Kecepatan bisa berubah per kalimat tanpa merusak hubungan antar-komponen. Untuk menjatuhkan satu kejadian tepat pada sebuah kata, skalakan sudut yang ditempuh dalam satu jendela waktu (`land`), jangan menggeser fase: mesin tidak boleh terlihat mundur.
-- **Benda berputar pada 30 fps** tampak diam atau mundur bila sudut per frame mendekati jarak antar-jeruji. Batasi putaran per detik atau kurangi jumlah jeruji dan lubang.
-- **Alat ukur dan angka yang menempel di layar**: jadikan anak kamera pada kedalaman tetap, matikan bayangan dan pantulannya, dan beri nama berawalan sama (misalnya `HUD_`). Sisihkan satu jalur layar untuknya (video #3: 8–25% dari atas) dan taruh titik fokus kamera di bawah jalur itu (`frame`). Tag di dunia diberi ukuran menurut jarak kamera supaya terbaca sama di shot jauh dan dekat (`tag`).
-- **Menukar komponen**: komponen baru tumbuh dulu, baru yang lama hilang. Urutan sebaliknya meninggalkan lubang kosong beberapa frame, dan itu hanya terlihat di strip gerak.
-- **Api dan kilat**: emisi di atas ±3 terpotong pada view transform Standard (jingga menjadi kuning, kuning menjadi putih) dan warna rata terbaca sebagai benda padat. Pakai gradasi dan opasitas, dengan kekuatan yang dipanggang per frame. Kilat harus lebih kecil dari ruang yang memuatnya pada frame puncaknya.
-- **Angka di layar hanya dari tabel cek fakta.** Kalau angkanya tidak ada, pakai label tanpa angka (video #3: jarum suhu bertanda C dan H).
+- **Repeating mechanical motion** (an engine, a pump, gears): build one angle curve for the whole video, the integral of a speed profile per sentence, then compute every part's position from that angle and write one linear key per frame (`bake`, `bake_input`). The speed can change from sentence to sentence without breaking the relationship between parts. To make an event land exactly on a word, scale the angle travelled inside a time window (`land`); do not shift the phase. The engine must never be seen running backwards.
+- **Rotating things at 30 fps** look frozen or reversed when the angle per frame approaches the spacing between spokes. Limit the revolutions per second, or use fewer spokes and holes.
+- **Gauges and numbers fixed to the screen**: make them children of the camera at a fixed depth, turn off their shadows and reflections, and give them a common name prefix (for example `HUD_`). Reserve a strip of the screen for them (video #3: 8 to 25% from the top) and put the camera's focus point below that strip (`frame`). Size tags in the world by camera distance so they read the same in wide and close shots (`tag`).
+- **Swapping parts**: the new part grows first, then the old one disappears. The other order leaves an empty hole for a few frames, and only a motion strip shows it.
+- **Flames and flashes**: emission above about 3 clips in the Standard view transform (orange becomes yellow, yellow becomes white), and a flat colour reads as a solid object. Use a gradient and opacity, with the strength baked per frame. At its peak frame, a flash must be smaller than the space that contains it.
+- **Numbers on screen come only from the fact-check table.** If there is no checked number, use a label without one (video #3: a temperature needle marked C and H).
 
-**Periksa sebelum GPU.** Bangun scene dengan mode `none` dan cetak kunci satu objek contoh tiap jenis gerak: `[(k.co.x, k.co.y, k.interpolation) for c in fcurves_of(obj) for k in c.keyframe_points]`. Untuk kamera, langkah posisi per frame harus naik-turun mulus tanpa lompatan tunggal. Still tidak bisa menunjukkan lintasan yang salah.
+**Check before the GPU.** Build the scene in mode `none` and print the keys of one sample object for each kind of motion: `[(k.co.x, k.co.y, k.interpolation) for c in fcurves_of(obj) for k in c.keyframe_points]`. For the camera, the position step per frame should rise and fall smoothly, with no single jump. Stills cannot show a wrong path.
 
-(v1.1) `python3 scene_check.py <scene>.py` mencetak semua itu dalam ±30 detik tanpa render: ukuran scene, langkah kamera terbesar dan lompatan satu frame, jadwal tampil tiap benda yang menempel di layar (`COMES BACK`, `STAYS TO THE END`), dan daftar kilat, yaitu benda yang ukurannya memuncak hanya 1–2 frame, beserta detik puncaknya. Jalankan setiap kali skrip scene berubah, juga setelah perbaikan kecil di tengah render: di video #3 satu perbaikan membawa label yang tertinggal, dan satu kilat yang terlalu besar lolos dari semua still.
+(v1.1) `python3 scene_check.py <scene>.py` prints all of that in about 30 seconds without rendering: the size of the scene, the largest camera steps and any single-frame jumps, when each object fixed to the screen is visible (`COMES BACK`, `STAYS TO THE END`), and a list of flashes, meaning objects whose size peaks for only one or two frames, with the second of each peak. Run it every time the scene script changes, including after a small fix in the middle of a render. In video #3, one fix left a label on screen, and one oversized flash got past every still.
 
-**Contoh lengkap** di folder `examples/` repo (baca bagiannya saja dengan `grep`, jangan seluruh berkas): `video02-kolam-renang-id/pool_video.py` (air, pipa, aliran, senja, satu gerak kamera), `video03-mesin-crv-id/engine_video.py` (mesin berputar yang dipanggang per frame, potongan boolean, alat ukur di layar, pertukaran komponen), dan `video01-septic-system-en/septic_video.py` (potongan keras, label di bidang potong, truk; skrip mandiri dari sebelum kit ada).
+**Complete examples** are in the repo's `examples/` folder (read the part you need with `grep`, not the whole file): `video02-swimming-pool-id/pool_video.py` (water, pipes, flow, dusk, one camera move), `video03-crv-engine-id/engine_video.py` (a turning engine baked per frame, boolean cuts, on-screen gauges, part swaps), and `video01-septic-system-en/septic_video.py` (hard cuts, labels on the cut face, a truck; a standalone script from before the kit existed).
 
-## 2. Preview di CPU
+## 2. Previews on CPU
 
 ```bash
-python3 <scene>.py still 270 480 4 st/r1 <detik tiap cue>        # 2–3 detik per still
-python3 captions.py test st/r1/t_00360.png 3.6 st/r1/c_00360.png # caption di atas still
-python3 <scene>.py still 540 960 12 st/hi <detik kunci>          # warna dan teks, ±20 detik per still
+python3 <scene>.py still 270 480 4 st/r1 <second of each cue>      # 2 to 3 seconds per still
+python3 captions.py test st/r1/t_00360.png 3.6 st/r1/c_00360.png   # caption on top of a still
+python3 <scene>.py still 540 960 12 st/hi <key seconds>            # colour and text, about 20 seconds per still
 ```
 
-Susun contact sheet dan lihat sendiri: komposisi, benda yang muncul sebelum waktunya, label terbaca, caption tidak menutupi subjek. Putaran berikutnya hanya untuk waktu yang bermasalah. Warna dinilai di ≥ 12 sampel; 4 sampel + denoise menipu. Dua video pertama butuh 4–5 putaran; video #3 butuh 6.
+Build a contact sheet and look at it yourself: composition, objects that appear too early, readable labels, captions that do not cover the subject. Later rounds cover only the moments that had problems. Judge colour at 12 samples or more; 4 samples with denoising is misleading. The first two videos took 4 to 5 rounds, and video #3 took 6.
 
-(v1.1) Dua jenis still tambahan sebelum GPU:
+(v1.1) Two more kinds of still before the GPU:
 
-- **Strip gerak**: 5–7 frame berurutan (270×480) di sekitar tiap pertukaran komponen dan tiap benda yang masuk atau keluar. Lubang kosong dan benda yang tampil sekejap sebelum waktunya hanya terlihat di sini.
-- **Frame puncak**: satu still ukuran penuh tepat pada detik puncak tiap jenis kilat yang dicetak `scene_check.py`. Still "di sekitar kata" memotret fase redupnya.
+- **Motion strips**: 5 to 7 consecutive frames (270x480) around every part swap and every object that enters or leaves. An empty hole, or an object that shows for an instant before its time, is visible only here.
+- **Peak frames**: one full-size still at the exact peak second of each kind of flash that `scene_check.py` prints. A still taken "around the word" shows the dim phase.
 
-Mode `list` merender nomor frame tertentu: `python3 <scene>.py list 270 480 4 st/mo frames.txt` (berkas berisi nomor frame dipisah spasi).
+Mode `list` renders specific frame numbers: `python3 <scene>.py list 270 480 4 st/mo frames.txt` (a file of frame numbers separated by spaces).
 
-## 3. Suara per bahasa
+## 3. Voice, per language
 
-| Bahasa | Suara bawaan | Tempo terukur | Catatan |
+| Language | Default voice | Measured pace | Notes |
 |---|---|---|---|
-| Inggris | Eleven v4, preset Cillian | ±2,7 kata per detik | 171 kata = 64 detik, dipakai tanpa tag |
-| Indonesia | Eleven v4, preset Marcus, teks diawali `[quick, energetic pace] ` | ±6,3 suku kata per detik setelah diolah | tanpa tag hanya 4,6; bahasa Indonesia ±2,2 suku kata per kata |
+| English | Eleven v4, preset Cillian | about 2.7 words per second | 171 words = 64 seconds, used without a tag |
+| Indonesian | Eleven v4, preset Marcus, text prefixed with `[quick, energetic pace] ` | about 6.3 syllables per second after processing | only 4.6 without the tag; Indonesian runs at about 2.2 syllables per word |
 
-Eleven v4 tidak punya pengatur kecepatan atau parameter bahasa; bahasa mengikuti teks. Biaya ±0,47 kredit per 100 karakter per take. `vo_prep.py` merapatkan jeda dan mempercepat paling banyak 1,10×. Audisi (opsional): dua kalimat yang sama untuk 4 suara, `audition.py ref.txt <lang>`, lalu pengguna memilih dengan telinga.
+Eleven v4 has no speed control and no language parameter; the language follows the text. It costs about 0.47 credits per 100 characters per take. `vo_prep.py` tightens the pauses and speeds the audio up by at most 1.10x. Audition (optional): the same two sentences for 4 voices, `audition.py ref.txt <lang>`, then the user chooses by ear.
 
-(v1.1) Catatan bahasa Indonesia dari video #3 (199 kata, satu take: 78,5 detik mentah, 74,0 setelah diolah):
+(v1.1) Notes on Indonesian from video #3 (199 words, one take: 78.5 seconds raw, 74.0 after processing):
 
-- Mesin transkripsi menulis angka sebagai digit, jadi kata-kata angka ("seribu tiga puluh delapan") mendapat waktu lewat interpolasi di `align.py`. Itu cukup untuk caption; cue yang harus tepat jangan digantungkan pada kata di tengah rangkaian angka.
-- Singkatan yang dieja tanpa huruf vokal ("CR-V") dihitung satu suku kata dan mendapat jatah waktu terlalu pendek. Bandingkan dengan waktu mentah di `asr_proc.json` dan betulkan `words.json` dengan skrip kecil yang disimpan di folder job (contoh: `examples/video03-mesin-crv-id/patch_words.py`), sebelum scene mulai ditulis.
-- `estimate_audio_cost` untuk `elevenlabs_v4` meminta bidang `dialogue`; kalau ditolak, pakai tarif terukur di atas.
+- The transcription engine writes numbers as digits, so number words ("seribu tiga puluh delapan") get their timing by interpolation in `align.py`. That is good enough for captions. Do not hang a cue that must be exact on a word in the middle of a run of numbers.
+- An abbreviation spelled without vowels ("CR-V") is counted as one syllable and gets too short a share of the time. Compare it with the raw timings in `asr_proc.json` and correct `words.json` with a small script kept in the job folder (example: `examples/video03-crv-engine-id/patch_words.py`), before you start writing the scene.
+- `estimate_audio_cost` for `elevenlabs_v4` asks for a `dialogue` field. If it rejects the call, use the measured rate above.
 
-## 4. Membaca hasil scan frame
+## 4. Reading the frame scan
 
-`scan.py` menandai frame yang menonjol dari kedua tetangganya. Yang sah: kamera berpindah cepat, benda kecil yang melintas cepat (titik aliran, percikan), puncak pantulan tag yang baru muncul (satu frame lebih besar), pola berulang saat kamera mulai bergerak. Yang cacat: objek hitam atau tertinggal pada frame milik satu proses saja (keadaan basi: pastikan `KIT_PERSIST=0`), benda melesat keluar lintasannya (bug animasi: lihat aturan keyframe). Tanda bahaya di ringkasan: tersangka menumpuk di satu proses, atau piksel hitam melonjak pada satu frame. Lihat tersangka terkuat dengan `trip_png.py` (frame PNG) atau `sandbox/trip.py` (video jadi).
+`scan.py` flags frames that stand out from both of their neighbours. Legitimate: a fast camera move, a small object crossing quickly (flow dots, splashes), the overshoot of a tag that has just appeared (larger for one frame), a repeating pattern as the camera starts to move. Defects: an object that is black or left behind on the frames of one process only (stale state: make sure `KIT_PERSIST=0`), or an object that shoots off its path (an animation bug: see the keyframe rules). Warning signs in the summary: suspects piling up in one process, or a black-pixel spike on a single frame. Look at the strongest suspects with `trip_png.py` (PNG frames) or `sandbox/trip.py` (a finished video).
 
-(v1.1) **Gerak berulang** (mesin berputar, nyala pembakaran) menghasilkan puluhan tersangka sah yang periodik: 104 dari 2.277 frame di video #3. Bila periodenya kelipatan jumlah proses, tersangka itu menumpuk di satu proses dan tampak seperti cacat keadaan basi. Bedakan dari periodenya dan letaknya di layar, lalu lihat satu contoh tiap kelompok. Lonjakan piksel hitam yang berulang dua kali per putaran di tempat yang sama adalah celah gelap yang sah. Sebaliknya, satu kilat yang menembus dinding wadahnya selama 1 frame memang cacat, dan scan menandainya: lihat frame puncak tiap kelompok kilat.
+(v1.1) **Repeating motion** (a turning engine, combustion flames) produces dozens of legitimate periodic suspects: 104 of 2,277 frames in video #3. When the period is a multiple of the number of processes, those suspects pile up in one process and look like a stale-state defect. Tell them apart by their period and their position on screen, then look at one example of each group. A black-pixel spike that repeats twice per revolution in the same place is a legitimate dark gap. A flash that pokes through the wall of its container for one frame, on the other hand, is a real defect, and the scan flags it: look at the peak frame of each group of flashes.
 
-## 5. Jebakan operasional
+## 5. Operational pitfalls
 
-| Gejala | Sebab | Perbaikan |
+| Symptom | Cause | Fix |
 |---|---|---|
-| Panggilan sandbox atau box "Bad Gateway" | menunggu lebih dari ±60 detik | `background:true` atau `nohup … &`, lalu poll pendek; cek keadaan sebelum mengulang |
-| Perintah mati dengan kode 143 | `pkill -f "pola"` membunuh shell sendiri | pola berkurung siku: `pkill -f "[p]ool_video.py anim"` (`job.sh` menyediakan `$PAT`) |
-| Setup jalan dua kali | `a && b && nohup c &` menaruh seluruh rantai di latar | langkah pendek satu per satu; hanya perintah panjang yang diberi `nohup` |
-| PUT kedua ke URL presigned ditolak | URL sekali pakai, wajib header `If-None-Match: *` | minta URL baru untuk tiap unggahan (`up.sh` sudah membawa header) |
-| Warna video lebih gelap dari frame | RGB→YUV memakai BT.601 padahal ditandai BT.709 | `captions.py` memakai filter `scale=out_color_matrix=bt709`; `qa_final.py` mencetak `COLOUR OK` |
-| Kedip 10 Hz, objek hitam di sepertiga frame | `use_persistent_data` pada render multi-proses | biarkan `KIT_PERSIST=0`; scan semua frame |
-| Contact sheet bersih padahal berkedip | semua contoh jatuh di proses yang sama | `qa_final.py` mengambil frame dari semua proses |
-| Whisper mengacaukan awal audio | naskah dijadikan `initial_prompt` | jangan beri prompt; teks selalu dari naskah |
-| Kata pertama setelah titik muncul terlalu awal | Whisper menaruh awal kata di dalam kata sebelumnya | `align.py` v1.0 menempelkannya ke akhir jeda; pastikan baris "words that span a pause" kosong |
-| Potongan tiga frame bergeser satu | `ffmpeg -ss` memberi frame pertama pada atau sesudah waktu | minta `(f−1)/fps − 0,012` (alat kit sudah begitu) |
-| Render melambat saat alat QA jalan | box 4 vCPU, tiga proses render memakai ±3,3 | satu alat analisa pada satu waktu, dengan `nice` |
-| (v1.1) Unggah ditolak `ExpiredToken` | URL unggah hanya hidup ±1 jam sejak diminta, walau `X-Amz-Expires` lebih panjang | minta URL saat render tinggal ±10 menit; `after.sh` menunggu `urls.sh` muncul |
-| (v1.1) Frame kontrol berbeda setelah render ulang sebagian | perbaikan mengubah sesuatu di luar rentang yang dirender ulang (label tertinggal, benda yang kembali) | pilih frame kontrol tepat sesudah tiap rentang; jalankan `scene_check.py` sebelum `rerender.sh` |
-| (v1.1) Mengetik ulang seluruh kit ke sandbox | workspace tidak bisa mengunggah ke Higgsfield | sandbox dan box mengambil kit dengan `git clone` dari repo publik; hanya berkas job yang dikirim sebagai teks |
-| File referensi berubah saat disalin | lewat `/mnt/user-data/outputs` (manifest C2PA) | jangan lewatkan file pihak ketiga di sana |
+| A sandbox or box call returns "Bad Gateway" | it waited longer than about 60 seconds | `background:true` or `nohup ... &`, then short polls; check the state before repeating |
+| A command dies with code 143 | `pkill -f "pattern"` killed its own shell | bracket the pattern: `pkill -f "[p]ool_video.py anim"` (`job.sh` provides `$PAT`) |
+| Setup runs twice | `a && b && nohup c &` puts the whole chain in the background | run short steps one at a time; use `nohup` only for the long command |
+| A second PUT to a presigned URL is refused | the URL is single-use and needs the header `If-None-Match: *` | request a new URL for every upload (`up.sh` already sends the header) |
+| The video is darker than the frames | RGB to YUV used BT.601 although the file is tagged BT.709 | `captions.py` uses the filter `scale=out_color_matrix=bt709`; `qa_final.py` prints `COLOUR OK` |
+| 10 Hz flicker, black objects on a third of the frames | `use_persistent_data` in a multi-process render | leave `KIT_PERSIST=0`; scan every frame |
+| The contact sheet is clean but the video flickers | every sample fell on the same process | `qa_final.py` takes frames from all processes |
+| Whisper garbles the start of the audio | the script was passed as `initial_prompt` | give no prompt; the text always comes from the script |
+| The first word after a full stop appears too early | Whisper puts the start of the word inside the previous one | `align.py` v1.0 snaps it to the end of the pause; make sure the line "words that span a pause" is empty |
+| A three-frame crop is off by one frame | `ffmpeg -ss` returns the first frame at or after the time | ask for `(f-1)/fps - 0.012` (the kit tools already do) |
+| The render slows down while a QA tool runs | the box has 4 vCPUs and three render processes use about 3.3 | one analysis tool at a time, with `nice` |
+| (v1.1) Upload refused with `ExpiredToken` | upload URLs work for only about one hour after they are issued, even though `X-Amz-Expires` is longer | request the URLs when the render has about 10 minutes left; `after.sh` waits for `urls.sh` to appear |
+| (v1.1) A control frame differs after a partial re-render | the fix changed something outside the re-rendered ranges (a label left behind, an object that comes back) | pick control frames just after each range; run `scene_check.py` before `rerender.sh` |
+| (v1.1) The whole kit had to be retyped into the sandbox | the workspace cannot upload to Higgsfield | the sandbox and the box fetch the kit with `git clone` from the public repo; only job files are sent as text |
+| A reference file changes when copied | it went through `/mnt/user-data/outputs` (C2PA manifest) | do not pass third-party files through there |
 
-## 6. Angka acuan
+## 6. Reference numbers
 
-| Hal | Video #1 (66 detik, 710 objek) | Video #2 (68,4 detik, 834 objek) | Video #3 (75,9 detik, 771 objek) |
+| Item | Video #1 (66 s, 710 objects) | Video #2 (68.4 s, 834 objects) | Video #3 (75.9 s, 771 objects) |
 |---|---|---|---|
-| Still CPU 270×480, 4 sampel | 2–3 detik | 2–3 detik | 11–15 detik pada 405×720 (logam, boolean, lampu area) |
-| Setup box | ±80 detik | ±3 menit (sempat dobel) | ±2 menit |
-| Render 3 proses di 1× L40S | 1,2 fps (persistent data hidup) | 0,74 fps (persistent data mati, bawaan sekarang) | 0,60 fps; ±262 ribu kunci yang dipanggang per frame |
-| Caption + encode + master bersih | ±3 menit | 2 menit 38 detik | 2 menit 36 detik |
-| Box menyala | 37 menit = 43,72 kredit | 1 jam 52 menit = 132,29 kredit, termasuk satu render terbuang dan satu render ulang sebagian | 1 jam 34 menit = 110,90 kredit, termasuk dua render ulang sebagian (±26) |
-| Suara | 4,37 kredit | 16,66 kredit (audisi + 2 take) | 6,44 kredit (1 take) |
+| CPU still, 270x480, 4 samples | 2 to 3 seconds | 2 to 3 seconds | 11 to 15 seconds at 405x720 (metal, booleans, area lights) |
+| Box setup | about 80 seconds | about 3 minutes (ran twice by mistake) | about 2 minutes |
+| Render, 3 processes on 1x L40S | 1.2 fps (persistent data on) | 0.74 fps (persistent data off, now the default) | 0.60 fps; about 262,000 keys, one per frame for every moving part |
+| Captions + encode + clean master | about 3 minutes | 2 minutes 38 seconds | 2 minutes 36 seconds |
+| Box running time | 37 minutes = 43.72 credits | 1 hour 52 minutes = 132.29 credits, including one discarded render and one partial re-render | 1 hour 34 minutes = 110.90 credits, including two partial re-renders (about 26) |
+| Voice | 4.37 credits | 16.66 credits (audition + 2 takes) | 6.44 credits (1 take) |
 
-Perkiraan bersih: menit box ≈ jumlah frame ÷ 0,74 ÷ 60 + 15. Dengan L40S 71 kredit per jam, 68 detik video ≈ 75 kredit. Scene dengan banyak kunci per frame atau banyak objek berkurva lebih lambat: pakai ÷ 0,6. Kecepatan render dibatasi CPU box (4 vCPU); GPU hanya terpakai 30–50%, jadi GPU yang lebih mahal tidak mempercepat. Still uji di box (±2,5 detik, satu proses) tidak mewakili kecepatan render penuh (±5 detik per frame per proses saat tiga proses berjalan bersama); proyeksikan ulang dari 2–3 menit pertama render.
+Net estimate: box minutes are roughly frames / 0.74 / 60 + 15. With an L40S at 71 credits per hour, a 68-second video costs about 75 credits. A scene with many keys per frame or many curve objects is slower: divide by 0.6. Render speed is limited by the box's CPU (4 vCPUs). The GPU is only 30 to 50% busy, so a more expensive GPU does not make it faster. A test still on the box (about 2.5 seconds, one process) does not represent the speed of the full render (about 5 seconds per frame per process when three run together), so project again from the first 2 to 3 minutes of the render.

@@ -1,84 +1,84 @@
-# Video 03 — catatan produksi "Mesin CR-V tembus seribu tenaga kuda" (ID)
+# Video 03: production record of "Mesin CR-V tembus seribu tenaga kuda" (how a CR-V engine reaches 1,000 hp, ID)
 
-23 November 2026 · video ketiga, produksi pertama dengan kit v1.0 dan ketiga skill · berkasnya di `examples/video03-mesin-crv-id/`
+23 November 2026. The third video, and the first production with kit v1.0 and all three skills. Its files are in `examples/video03-crv-engine-id/`.
 
-Catatan ini versi repo: tautan hasil, ID media, sidik file, saldo akun, dan lokasi penyimpanan pribadi dihilangkan. "Plan" yang disebut di sini adalah dokumen rencana internal; naskah dan cek faktanya ada di `examples/video03-mesin-crv-id/script_id.md`.
+This is the repo version of the record: result links, media IDs, file fingerprints, the account balance and private storage locations have been removed. The "plan" mentioned here is an internal planning document; the script and its fact check are in `examples/video03-crv-engine-id/script_id.md`.
 
-Video ini dibuat dari video referensi berbahasa Inggris tentang mesin turbo 1.000 hp. Bedahnya ada di `video03-reference-analysis.md`. Naskahnya ditulis ulang dari fakta yang dicek, bukan diterjemahkan.
+The video was made from an English reference video about a 1,000 hp turbo engine. Its teardown is in `video03-reference-analysis.md`. The script was rewritten from checked facts, not translated.
 
-## 1. Hasil
+## 1. Result
 
-| Hal | Nilai |
+| Item | Value |
 |---|---|
-| Keluaran | video final (61,4 MB) dengan caption dan suara, plus master bersih (77,1 MB, tanpa caption dan suara) |
-| Format | H.264 1080×1920, 30 fps, yuv420p, BT.709, 2.277 frame, 75,9 detik; AAC 48 kHz stereo; −14,4 LUFS, puncak −4,2 dBFS |
-| Naskah | 22 kalimat, 199 kata, bahasa Indonesia; caption gaya `phrases`, 80 frasa dengan jeda manual |
-| Kredit | suara 6,44 + GPU 110,90 = **117,34** (batas yang disetujui: suara 15, GPU 160) |
+| Output | the final video (61.4 MB) with captions and sound, plus a clean master (77.1 MB, no captions or sound) |
+| Format | H.264 1080x1920, 30 fps, yuv420p, BT.709, 2,277 frames, 75.9 seconds; AAC 48 kHz stereo; -14.4 LUFS, peak -4.2 dBFS |
+| Script | 22 sentences, 199 words, Indonesian; `phrases` captions, 80 phrases with manual breaks |
+| Credits | voice 6.44 + GPU 110.90 = **117.34** (approved limits: voice 15, GPU 160) |
 
-## 2. Angka terukur
+## 2. Measured numbers
 
-| Hal | Angka |
+| Item | Number |
 |---|---|
-| Suara | Eleven v4, preset Marcus, tag `[quick, energetic pace]`, satu take: 78,45 detik mentah → 73,98 detik setelah `vo_prep.py` (−14,3 LUFS) |
-| Waktu per kata | 199 kata, tidak ada kata yang melintasi jeda. Mesin transkripsi menulis angka sebagai digit, jadi 37 kata diberi waktu lewat interpolasi; "CR-V" dibetulkan di dua tempat dengan `patch_words.py` |
-| Scene | `engine_video.py`, 484 baris, 771 objek, 71 material, ±262 ribu kunci |
-| Pratinjau CPU | 6 putaran: ±100 still 405×720 (11–15 detik per still), 3 still 720×1280, 42 still strip gerak di sekitar pergantian komponen; semuanya gratis |
-| Still uji di GPU | 2,5 detik per still (1080×1920, 64 sampel, OptiX); tampilannya sama dengan pratinjau CPU |
-| Render penuh | 2.277 frame dalam 63 menit 25 detik, 3 proses: 0,60 frame per detik (±5,0 detik per frame per proses). GPU hanya terpakai 30–50%; batasnya CPU box (4 vCPU) |
-| Encode | final + master bersih + scan paralel: 2 menit 36 detik |
-| Render ulang sebagian | 189 frame, lalu 37 frame |
-| Box menyala | 1 jam 33 menit 43 detik |
+| Voice | Eleven v4, preset Marcus, tag `[quick, energetic pace]`, one take: 78.45 seconds raw, 73.98 seconds after `vo_prep.py` (-14.3 LUFS) |
+| Word timings | 199 words, none spanning a pause. The transcription engine writes numbers as digits, so 37 words got their timing by interpolation; "CR-V" was corrected in two places with `patch_words.py` |
+| Scene | `engine_video.py`, 484 lines, 771 objects, 71 materials, about 262,000 keys |
+| CPU previews | 6 rounds: about 100 stills at 405x720 (11 to 15 seconds each), 3 stills at 720x1280, 42 motion-strip stills around the part swaps; all free |
+| Test stills on the GPU | 2.5 seconds per still (1080x1920, 64 samples, OptiX); they look the same as the CPU previews |
+| Full render | 2,277 frames in 63 minutes 25 seconds with 3 processes: 0.60 frames per second (about 5.0 seconds per frame per process). The GPU was only 30 to 50% busy; the limit is the box's CPU (4 vCPUs) |
+| Encoding | final video, clean master and scan in parallel: 2 minutes 36 seconds |
+| Partial re-renders | 189 frames, then 37 frames |
+| Box running time | 1 hour 33 minutes 43 seconds |
 
-Dari 110,9 kredit GPU, ±85 untuk jalur lurus (setup, still uji, render penuh, encode, unggah pertama) dan ±26 untuk dua putaran perbaikan beserta unggah ulangnya.
+Of the 110.9 GPU credits, about 85 went to the straight path (setup, test stills, full render, encoding, first upload) and about 26 to two rounds of fixes and their uploads.
 
-## 3. Cara scene dibangun
+## 3. How the scene is built
 
-- **Satu kurva sudut engkol untuk seluruh video.** Profil kecepatan per kalimat (0 sampai 3,3 putaran per detik di layar) diintegralkan menjadi sudut per frame; kruk as, piston, setang, klep, per, noken as, nyala pembakaran, dan ngelitik dipanggang per frame dari sudut itu. Hasilnya konsisten secara mekanis pada kecepatan berapa pun. `land()` menskalakan sudut di dalam satu jendela waktu, supaya piston menyentuh klep tepat pada kata "dihantam" dan ngelitik pertama jatuh pada kata "meledak", tanpa mesin pernah berputar mundur.
-- **Pertukaran komponen.** Dua set anak di bawah satu empty (piston dan setang cor ↔ tempa, per standar ↔ ganda, klep ↔ Inconel) dan dua kepala silinder utuh yang diangkat lalu dipindah ke luar set.
-- **Alat ukur di layar.** Anak kamera pada kedalaman tetap dengan bayangan dan pantulan dimatikan; jalur atas layar (±8–25% tinggi) berisi jarum (boost, rpm, suhu), judul bab, nilai, dan penghitung tenaga. Titik fokus kamera ditaruh di bawah jalur itu.
-- **Tag dunia berukuran menurut jarak kamera** (persen tinggi layar), supaya terbaca sama di shot jauh dan dekat.
-- **Nyala pembakaran**: silinder dengan material bergradasi (terang di bawah kepala, tembus ke arah piston); kekuatan dan opasitasnya dipanggang per frame.
+- **One crank-angle curve for the whole video.** A speed profile per sentence (0 to 3.3 revolutions per second on screen) is integrated into an angle per frame. The crankshaft, pistons, connecting rods, valves, springs, camshafts, combustion flames and knock are all baked per frame from that angle, so they stay mechanically consistent at any speed. `land()` scales the angle inside a time window so that the piston touches the valve exactly on the word "dihantam" (struck) and the first knock falls on the word "meledak" (explodes), without the engine ever turning backwards.
+- **Part swaps.** Two sets of children under one empty (cast pistons and rods against forged ones, standard springs against dual springs, valves against Inconel valves) and two complete cylinder heads that are lifted off and moved outside the set.
+- **Gauges on screen.** Children of the camera at a fixed depth, with shadows and reflections turned off. A strip at the top of the screen (about 8 to 25% of the height) holds the needles (boost, rpm, temperature), the chapter titles, the values and the horsepower counter. The camera's focus point is placed below that strip.
+- **Tags in the world are sized by camera distance** (a percentage of the screen height), so they read the same in wide and close shots.
+- **Combustion flame**: a cylinder with a gradient material (bright under the head, transparent toward the piston); its strength and opacity are baked per frame.
 
-## 4. Temuan selama pratinjau (gratis)
+## 4. Findings during the previews (free)
 
-- Nyala yang awalnya silinder kuning rata terbaca sebagai benda padat sewarna bidang potong. Emisi jingga dengan kekuatan di atas ±3 terpotong menjadi kuning pada view transform Standard; warna nyala dan sabuk bocor di sambungan kepala dipindah ke merah-jingga.
-- Strip gerak menemukan dua hal yang tidak terlihat di still: lubang silinder kosong ±3 frame saat piston ditukar, dan cincin air pendingin yang tampil sebagai tabung biru 0,15 detik sebelum selongsong terakhir masuk. Keduanya diperbaiki: komponen baru tumbuh dulu, baru yang lama hilang.
-- Pemeriksaan tanpa render: langkah kamera terbesar 0,65 unit per frame tanpa lompatan satu frame; celah klep-piston terkecil +0,133 di semua silinder kecuali klep buang silinder 1, yang memang disentuh pada 48,03 detik (kata jatuh di 48,02); mesin tidak pernah mundur.
-- Putaran roda turbo dan jumlah lubang roda gila dibatasi supaya tidak tampak berputar mundur pada 30 fps.
-- Suhu udara masuk tidak ada di tabel cek fakta, jadi jarum suhu hanya bertanda C dan H tanpa angka.
+- The flame, at first a flat yellow cylinder, read as a solid object in the colour of the cut face. Orange emission with a strength above about 3 clips to yellow in the Standard view transform. The flame and the leak band at the head joint were moved to red-orange.
+- Motion strips found two things that no still showed: an empty cylinder bore for about 3 frames while the pistons were swapped, and the coolant ring appearing as a blue tube 0.15 seconds before the last sleeve went in. Both were fixed: the new part grows first, then the old one disappears.
+- Checks without rendering: the largest camera step is 0.65 units per frame with no single-frame jump; the smallest valve-to-piston gap is +0.133 in every cylinder except the exhaust valve of cylinder 1, which is meant to be touched at 48.03 seconds (the word falls at 48.02); the engine never runs backwards.
+- The speed of the turbo wheel and the number of holes in the flywheel were limited so that they do not appear to turn backwards at 30 fps.
+- The intake air temperature is not in the fact-check table, so the temperature needle is marked only C and H, with no number.
 
-## 5. Pemeriksaan pada file final
+## 5. Checks on the final file
 
-- **Sidik file** di tautan sama dengan file di box.
-- **Warna**: `COLOUR OK` pada final dan master bersih (selisih rata-rata 1,8–2,4 terhadap frame PNG dengan matriks BT.709; lebih buruk bila dibaca sebagai BT.601).
-- **Sinkron** (transkripsi ulang file final): awal kata terhadap narasi median 0,000 detik, p95 0,020 detik; terhadap waktu caption p95 0,059 detik. 163 dari 199 kata dikenali; angka tidak ditranskripsi sebagai kata.
-- **Frame kontrol**: frame 600, 1400, 1975, dan 2000 dirender ulang dengan skrip akhir dan sama dengan frame di video (selisih blok terbesar 0,03).
-- **Scan semua frame**: 104 tersangka dari 2.277, tersebar di ketiga proses (41, 35, 28). Dua belas yang terkuat dilihat sebagai potongan tiga frame; sisanya digolongkan dari pola dan letaknya, tidak dilihat satu per satu:
-  - nyala pembakaran dan ngelitik: berulang tiap putaran mesin, jadi selalu jatuh pada proses yang sama;
-  - celah gelap antara setang dan kruk as yang muncul dua kali per putaran (lonjakan ±2.000–3.500 piksel hitam): dilihat pada tiga frame berurutan, bayangan yang sah;
-  - komponen yang masuk atau keluar (turbo, kepala silinder, pertukaran kepala);
-  - percikan saat klep dihantam, dan tag atau angka yang muncul.
-- **Yang tidak bisa dinilai Claude**: suara belum didengar dan gerak belum ditonton. Kata yang ditulis berbeda oleh mesin transkripsi (detik video): "CR-V" 0,9 dan 33,3; "stud" 24,4; "VTEC-nya" 39,6; "noken as" 40,7; "Inconel" 51,9.
+- **Fingerprint**: the file at the link equals the file on the box.
+- **Colour**: `COLOUR OK` for the final video and the clean master (mean difference 1.8 to 2.4 against the PNG frames with the BT.709 matrix; worse when read as BT.601).
+- **Sync** (a second transcription of the final file): word starts against the narration have a median offset of 0.000 seconds and a 95th percentile of 0.020 seconds; against the caption timing the 95th percentile is 0.059 seconds. 163 of 199 words were recognised; numbers are not transcribed as words.
+- **Control frames**: frames 600, 1400, 1975 and 2000 were rendered again with the final script and equal the frames in the video (largest block difference 0.03).
+- **Scan of every frame**: 104 suspects in 2,277 frames, spread over the three processes (41, 35, 28). The twelve strongest were looked at as three-frame crops. The rest were classified by their pattern and position, not looked at one by one:
+  - combustion flames and knock: they repeat with every revolution of the engine, so they always fall on the same process;
+  - the dark gap between a connecting rod and the crankshaft, which appears twice per revolution (a spike of about 2,000 to 3,500 black pixels): looked at on three consecutive frames, a legitimate shadow;
+  - parts that enter or leave (the turbo, the cylinder head, the head swap);
+  - the sparks when the valve is struck, and tags or numbers appearing.
+- **What Claude could not judge**: the audio has not been listened to and the motion has not been watched. Words the transcription engine wrote differently (seconds in the video): "CR-V" at 0.9 and 33.3; "stud" at 24.4; "VTEC-nya" at 39.6; "noken as" at 40.7; "Inconel" at 51.9.
 
-## 6. Yang menyimpang dari rencana
+## 6. Deviations from the plan
 
-1. **Suhu udara tanpa angka** (lihat bagian 4).
-2. **Tangki bahan bakar hanya muncul di bab 3** (merah "BENSIN" menjadi hijau "E85" di atas troli); di shot lain ia terpotong tepi layar.
-3. **Kepala silinder dibedakan lewat warna potongan** (bawaan kuning pucat, Type R merah), di luar rencana tetapi membuat pertukarannya terbaca.
-4. **URL unggah kedaluwarsa.** Empat URL diminta sebelum render dan dipakai 70 menit kemudian: semuanya ditolak dengan `ExpiredToken`, walau `X-Amz-Expires` 86.400 detik. URL baru diminta dan unggahan diulang (±2 menit box).
-5. **Dua putaran perbaikan setelah render penuh:**
-   - Scan menandai frame puncak ngelitik: bola kilat (skala 1,7) lebih besar dari silinder dan bersegi kasar, terlihat 1 frame tiap ledakan. Pratinjau CPU hanya memotret fase redupnya. Diperbaiki (skala paling besar 1,0; 24 segmen) dan 141 frame dirender ulang, bersama dua pergantian angka di layar yang sempat bertumpuk (48 frame).
-   - Perbaikan pergantian angka itu sendiri membawa kesalahan: label "160" pertama di penghitung muncul kembali dan menetap, karena kunci akhir `pop()` (0,28 detik) jatuh setelah kunci `vanish()` yang dipercepat. Frame kontrol 2000 yang dirender ulang berbeda dari video, dan dari situ kesalahannya ketahuan sebelum serah terima. Diperbaiki dan 37 frame dirender ulang.
-6. **Kode kit dikirim ke sandbox sebagai teks** (±123 KB, 21 berkas, semua sidik cocok), karena workspace Claude tidak bisa mengunggah ke Higgsfield dan repo publik ini belum ada.
+1. **Air temperature without a number** (see section 4).
+2. **The fuel can appears only in chapter 3** (a red can marked "BENSIN" turns into a green one marked "E85" on a cart); in other shots it was cut off by the edge of the frame.
+3. **The cylinder heads are told apart by the colour of their cut face** (pale yellow for the stock head, red for the Type R head). This was not planned, but it makes the swap readable.
+4. **The upload URLs expired.** Four URLs were requested before the render and used 70 minutes later. All were refused with `ExpiredToken`, even though `X-Amz-Expires` was 86,400 seconds. New URLs were requested and the upload was repeated (about 2 minutes of box time).
+5. **Two rounds of fixes after the full render:**
+   - The scan flagged the peak frames of the knock: the flash sphere (scale 1.7) was larger than the cylinder and coarsely faceted, and visible for 1 frame at each explosion. The CPU previews had only captured its dim phase. It was fixed (maximum scale 1.0, 24 segments) and 141 frames were rendered again, together with two changes of the on-screen number that had overlapped (48 frames).
+   - The fix for those number changes introduced a mistake of its own: the first "160" label of the counter came back and stayed, because the last key of `pop()` (at 0.28 seconds) fell after the key of the shortened `vanish()`. The re-rendered control frame 2000 differed from the video, and that is how the mistake was caught before handover. It was fixed and 37 frames were rendered again.
+6. **The kit code was sent to the sandbox as text** (about 123 KB, 21 files, every fingerprint matched), because Claude's workspace cannot upload to Higgsfield and this public repo did not exist yet.
 
-## 7. Pelajaran (sudah masuk kit v1.1)
+## 7. Lessons (now in kit v1.1)
 
-- **URL unggah Higgsfield hanya hidup ±1 jam.** Minta URL saat render tinggal ±10 menit. `after.sh` v1.1 menunggu `urls.sh` muncul.
-- **Periksa frame puncak setiap kilat.** Efek yang hidup 1–2 frame (ledakan, percikan) harus dipotret tepat di frame puncaknya saat pratinjau, bukan di sekitar kata. `scene_check.py` mencetak detik puncaknya.
-- **Jadwal label layar dicetak sebelum render.** `scene_check.py` mencetak rentang tampil tiap benda yang menempel di layar dan menandai `COMES BACK` atau `STAYS TO THE END`. `pop()` diikuti `vanish()` yang lebih cepat dari durasi `pop()` membuat label kembali.
-- **Frame kontrol `rerender.sh`**: sertakan satu frame sesudah tiap rentang yang dirender ulang. Itulah yang menangkap label yang tertinggal.
-- **Scan pada gerak berulang**: mesin yang berputar menghasilkan puluhan tersangka sah yang periodik dan menumpuk di satu proses bila periodenya kelipatan jumlah proses. Nilai dari periode dan letaknya, lalu lihat contohnya.
-- **Kecepatan render dibatasi CPU box**, bukan GPU. Perkiraan menit box = frame ÷ 0,6 ÷ 60 + 10 untuk scene sebesar ini.
-- **Emisi di atas ±3 terpotong** pada view transform Standard. Nyala diberi gradasi dan opasitas, bukan warna rata.
-- **Satu kurva sudut untuk semua gerak mekanis**, dipanggang per frame, membuat kecepatan mesin bisa diubah per kalimat tanpa merusak hubungan piston, klep, dan nyala.
-- **Mengirim berkas ke sandbox sebagai teks itu mahal.** Dengan repo ini, sandbox dan box cukup `git clone`, dan hanya scene serta berkas job yang dikirim.
+- **Higgsfield upload URLs work for only about one hour.** Request them when the render has about 10 minutes left. `after.sh` v1.1 waits for `urls.sh` to appear.
+- **Check the peak frame of every flash.** An effect that lasts one or two frames (an explosion, a spark) must be captured at its exact peak frame during the previews, not somewhere near the word. `scene_check.py` prints the peak second.
+- **Print the timetable of on-screen labels before rendering.** `scene_check.py` prints when each object fixed to the screen is visible and flags `COMES BACK` or `STAYS TO THE END`. A `pop()` followed by a `vanish()` that is faster than the `pop()` makes the label come back.
+- **Control frames for `rerender.sh`**: include one frame just after each re-rendered range. That is what catches a label left behind.
+- **Scanning repeating motion**: a turning engine produces dozens of legitimate periodic suspects, and they pile up in one process when the period is a multiple of the number of processes. Judge them by their period and position, then look at an example.
+- **Render speed is limited by the box's CPU**, not the GPU. For a scene this size, box minutes are about frames / 0.6 / 60 + 10.
+- **Emission above about 3 clips** in the Standard view transform. Give a flame a gradient and opacity, not a flat colour.
+- **One angle curve for all mechanical motion**, baked per frame, lets the engine speed change from sentence to sentence without breaking the relationship between piston, valve and flame.
+- **Sending files to the sandbox as text is expensive.** With this repo, the sandbox and the box can simply `git clone`, and only the scene and the job files need to be sent.

@@ -1,112 +1,112 @@
-# Video 02 — bedah video contoh (kolam renang, bahasa Inggris)
+# Video 02: teardown of the sample video (swimming pool, English)
 
-22 November 2026 · contoh keluaran skill `reference-short-teardown` · alat ukurnya `kit/ref_teardown.py`
+22 November 2026. A sample output of the `reference-short-teardown` skill. The measuring tool is `kit/ref_teardown.py`.
 
-Catatan ini versi repo: nama file dan sidik file video referensi dihilangkan. Naskah video referensi tidak pernah dicatat di sini; tabel struktur hanya memuat fungsi tiap beat.
+This is the repo version: the file name and fingerprint of the reference video have been removed. The script of the reference video was never recorded here; the structure table lists only the function of each beat.
 
-Claude tidak bisa menonton gerak atau mendengar audio. Semua isi dokumen ini berasal dari frame diam, pembacaan caption (OCR), dan pengukuran sinyal.
+Claude cannot watch motion or hear audio. Everything in this document comes from still frames, reading the captions (OCR) and signal measurements.
 
-## 1. File yang dibedah
+## 1. The file analysed
 
-| Hal | Nilai |
+| Item | Value |
 |---|---|
-| Sumber | video pendek TikTok berbahasa Inggris tentang cara kerja kolam renang, diunggah pengguna sebagai contoh format (nama akun tidak tercatat pada file yang dibedah) |
-| Video | HEVC 1080×1920, 60 fps asli (tidak ada frame kembar), 3.994 frame, 66,57 detik |
-| Audio | AAC 44,1 kHz, kanal kiri sama dengan kanan (mono), −15,7 LUFS, rentang 4,6 LU |
+| Source | an English-language TikTok short about how a swimming pool works, uploaded by the user as a format example (no account name is recorded in the file) |
+| Video | HEVC 1080x1920, native 60 fps (no duplicate frames), 3,994 frames, 66.57 seconds |
+| Audio | AAC 44.1 kHz, left channel equal to right (mono), -15.7 LUFS, range 4.6 LU |
 
-File video referensi tidak disertakan di repo.
+The reference video file is not included in the repo.
 
-## 2. Angka terukur
+## 2. Measured numbers
 
-| Hal | Hasil | Cara ukur |
+| Item | Result | How it was measured |
 |---|---|---|
-| Narasi | ±259 kata, 21 kalimat, dari detik 0,1 sampai ±64,1 | OCR caption di 15 fps, lalu dicocokkan ke transkrip yang dirapikan; 5 kata diisi interpolasi |
-| Tempo | 4,0 kata per detik (±243 kata per menit), kira-kira 5,3–5,7 suku kata per detik | jumlah kata dibagi rentang narasi |
-| Jeda | hanya 1 jeda ≥ 0,18 detik | `silencedetect` di −38 dB. Artinya jeda dirapatkan saat edit |
-| Suara | nada dasar median ±165–175 Hz | autokorelasi pada frame bersuara; dua cara ukur memberi 164 dan 176 Hz |
-| Musik | tidak terdeteksi music bed di bawah narasi | titik tersunyi tiap 2 detik berada di −38 s.d. −50 dB dan tidak rata |
-| Bunyi penutup | setelah narasi selesai masih ada ±2,5 detik bunyi bernada di ±−33 dB | level dan kerataan spektrum di ekor file |
-| Caption | satu kata per tampilan, di tengah, pusatnya di ±52% tinggi layar | potongan pita y=905–1105 px |
-| Bentuk caption | huruf bulat tebal, isi putih, garis luar biru tua tebal, bayangan lembut; tinggi huruf kapital ±75 px; huruf pertama kapital | diamati di potongan 100% |
-| Potongan keras | tidak ada | deteksi scene di ambang 0,30 dan 0,12, serta lonjakan beda antar-frame |
-| Gerak kamera | 22 gerakan cepat, median 0,94 detik, dimulai tiap ±2,5 detik | beda piksel antar-frame di 90×160 |
-| Pembagian waktu | 27% bergerak cepat, 33% drift pelan, 40% nyaris diam | sama |
+| Narration | about 259 words, 21 sentences, from 0.1 to about 64.1 seconds | caption OCR at 15 fps, matched to a cleaned transcript; 5 words filled in by interpolation |
+| Pace | 4.0 words per second (about 243 words per minute), roughly 5.3 to 5.7 syllables per second | word count divided by the narration span |
+| Pauses | only 1 pause of 0.18 seconds or more | `silencedetect` at -38 dB. The pauses were tightened in the edit |
+| Voice | median pitch about 165 to 175 Hz | autocorrelation on voiced frames; two methods gave 164 and 176 Hz |
+| Music | no music bed detected under the narration | the quietest point in each 2 seconds lies between -38 and -50 dB and is not flat |
+| Closing sound | about 2.5 seconds of tonal sound at about -33 dB after the narration ends | level and spectral flatness in the tail of the file |
+| Captions | one word at a time, centred, at about 52% of the screen height | a crop of the band y = 905 to 1105 px |
+| Caption look | heavy rounded letters, white fill, thick dark blue outline, soft shadow; capital height about 75 px; first letter capitalised | observed in a 100% crop |
+| Hard cuts | none | scene detection at thresholds 0.30 and 0.12, and spikes in the frame-to-frame difference |
+| Camera moves | 22 fast moves, median 0.94 seconds, starting every 2.5 seconds or so | pixel difference between frames at 90x160 |
+| Share of time | 27% moving fast, 33% drifting slowly, 40% almost still | the same |
 
-## 3. Struktur
+## 3. Structure
 
-Polanya sama dengan referensi #1: giliran "tapi…" (masalah) dan "jadi…" (solusi) dengan sudut pandang orang kedua. Tiga komponen diberi nama setelah fungsinya dijelaskan. Tabel ini mencatat fungsi tiap beat, bukan kalimatnya; kolom pokok isi tiap beat tidak disertakan di versi repo.
+The pattern is the same as in reference #1: turns of "but..." (a problem) and "so..." (a solution), in the second person. Three components are named after their function has been explained. The table lists the function of each beat, not its sentences; the column with the gist of each beat is left out of the repo version.
 
-| # | Detik | Fungsi | Kata | Kata/dtk |
+| # | Seconds | Function | Words | Words/s |
 |---|---|---|---|---|
-| 1 | 0,1–3,6 | hook | 18 | 5,1 |
-| 2 | 3,6–7,7 | masalah | 17 | 4,1 |
-| 3 | 7,7–12,6 | solusi | 21 | 4,3 |
-| 4 | 12,6–19,0 | masalah | 28 | 4,4 |
-| 5 | 19,0–27,1 | solusi + nama | 33 | 4,1 |
-| 6 | 27,1–30,4 | masalah | 12 | 3,7 |
-| 7 | 30,4–37,1 | solusi + nama | 31 | 4,6 |
-| 8 | 37,1–44,9 | masalah + solusi + nama | 31 | 3,9 |
-| 9 | 44,9–50,9 | lanjutan | 19 | 3,2 |
-| 10 | 50,9–54,5 | masalah + solusi | 17 | 4,7 |
-| 11 | 54,5–59,7 | fakta | 18 | 3,4 |
-| 12 | 59,7–62,0 | pelengkap | 7 | 3,1 |
-| 13 | 62,0–66,6 | payoff | 7 | — |
+| 1 | 0.1-3.6 | hook | 18 | 5.1 |
+| 2 | 3.6-7.7 | problem | 17 | 4.1 |
+| 3 | 7.7-12.6 | solution | 21 | 4.3 |
+| 4 | 12.6-19.0 | problem | 28 | 4.4 |
+| 5 | 19.0-27.1 | solution + name | 33 | 4.1 |
+| 6 | 27.1-30.4 | problem | 12 | 3.7 |
+| 7 | 30.4-37.1 | solution + name | 31 | 4.6 |
+| 8 | 37.1-44.9 | problem + solution + name | 31 | 3.9 |
+| 9 | 44.9-50.9 | continuation | 19 | 3.2 |
+| 10 | 50.9-54.5 | problem + solution | 17 | 4.7 |
+| 11 | 54.5-59.7 | fact | 18 | 3.4 |
+| 12 | 59.7-62.0 | addition | 7 | 3.1 |
+| 13 | 62.0-66.6 | payoff | 7 | n/a |
 
-Beat terpanjang 8 detik. Paruh pertama berganti masalah/solusi tiap 4–8 detik; tempo bicara melambat sedikit di fakta dan di akhir.
+The longest beat is 8 seconds. The first half alternates problem and solution every 4 to 8 seconds; the speaking pace slows a little at the fact and at the end.
 
-## 4. Bahasa visual
+## 4. Visual language
 
-- Satu lokasi sepanjang video: halaman belakang rumah dua lantai, rumput bergaris, teras, pohon, properti kecil. Yang berubah hanya kolamnya.
-- Sudut kamera tinggi 3/4. Separuh bawah layar adalah bidang potongan tanah bertekstur batuan; kolam terlihat sebagai penampang.
-- Aset bertekstur semi-realistis, bukan low-poly.
-- Tidak ada papan atau label di dalam dunia 3D. Informasi dibawa oleh caption, panah putih 3D, dan warna (air tanah sebagai rona biru di bidang potongan, komponen penting berwarna merah).
-- Close-up penampang untuk komponen: katup di atas kerikil, tabung filter terbelah dengan lapisan pasir, kotak skimmer dengan keranjang.
-- Aliran digambar dengan panah dan titik yang bergerak di dalam pipa, bukan simulasi fluida.
-- Penutup: kolam jadi dengan orang berenang, payung, kursi, pelampung.
+- One location for the whole video: the back yard of a two-storey house, striped lawn, terrace, trees, small props. Only the pool changes.
+- A high three-quarter camera angle. The lower half of the screen is a cut face of soil with a rock texture; the pool is seen in section.
+- Semi-realistic textured assets, not low-poly.
+- No signs or labels inside the 3D world. Information is carried by the captions, white 3D arrows and colour (groundwater as a blue tint on the cut face, important components in red).
+- Section close-ups of components: a valve on gravel, a filter tank cut open with its sand layer, a skimmer box with its basket.
+- Flow is drawn with arrows and dots moving inside the pipes, not a fluid simulation.
+- Close: the finished pool with people swimming, an umbrella, chairs, floats.
 
-## 5. Dibanding referensi #1 dan video #1
+## 5. Compared with reference #1 and video #1
 
-| Hal | Referensi #1 (septic, ID) | Referensi #2 (kolam, EN) | Video #1 kita (septic, EN) |
+| Item | Reference #1 (septic, Indonesian) | Reference #2 (pool, English) | Our video #1 (septic, English) |
 |---|---|---|---|
-| Durasi | 70,7 dtk | 66,6 dtk | 66,0 dtk |
+| Duration | 70.7 s | 66.6 s | 66.0 s |
 | Frame rate | 30 | 60 | 30 |
-| Narasi | 175 kata, ±149 kata/menit | ±259 kata, ±243 kata/menit | 171 kata, ±156 kata/menit |
-| Potongan keras | 9 | 0 | 14 batas shot (campuran potongan dan gerak) |
-| Caption | kumulatif per frasa 1–4 kata, ±65% tinggi | satu kata, ±52% tinggi | kumulatif per frasa, 67,5% tinggi |
-| Tulisan di dunia 3D | ada | tidak ada | ada |
-| Karakter | manekin kayu | orang di adegan akhir | maskot engineer |
-| Musik | tidak terlihat | tidak terdeteksi; ada bunyi penutup | tidak ada |
-| Kenyaringan | −14,2 LUFS | −15,7 LUFS | −14,3 LUFS |
+| Narration | 175 words, about 149 words per minute | about 259 words, about 243 words per minute | 171 words, about 156 words per minute |
+| Hard cuts | 9 | 0 | 14 shot boundaries (a mix of cuts and moves) |
+| Captions | cumulative phrases of 1 to 4 words, at about 65% height | one word, at about 52% height | cumulative phrases, at 67.5% height |
+| Text in the 3D world | yes | no | yes |
+| Characters | a wooden mannequin | people in the final scene | an engineer mascot |
+| Music | none seen | none detected; there is a closing sound | none |
+| Loudness | -14.2 LUFS | -15.7 LUFS | -14.3 LUFS |
 
-Pelajaran: dua referensi memakai resep cerita yang sama tetapi kemasan berbeda. Referensi #2 hampir dua kali lebih padat kata, tanpa potongan keras, dan caption-nya satu kata. Video #1 kita lebih dekat ke referensi #1.
+Lesson: the two references use the same story recipe in different packaging. Reference #2 is almost twice as dense in words, has no hard cuts, and shows one caption word at a time. Our video #1 is closer to reference #1.
 
-## 6. Kenapa formatnya bekerja
+## 6. Why the format works
 
-1. Hook menawarkan versi paling sederhana dari hal yang rumit, lalu langsung dibantah.
-2. Setiap solusi melahirkan masalah berikutnya, jadi selalu ada alasan menonton beat selanjutnya.
-3. Tidak ada udara kosong: jeda dirapatkan dan kata baru muncul di layar tiap ±0,25 detik.
-4. Kamera berpindah bingkai tiap ±2,5 detik tanpa memotong, sehingga penonton tidak kehilangan orientasi.
-5. Kalimat hook diulang di akhir, dan kali ini benar.
+1. The hook offers the simplest version of something complicated, then knocks it down at once.
+2. Every solution creates the next problem, so there is always a reason to watch the next beat.
+3. There is no dead air: the pauses are tightened and a new word appears on screen about every 0.25 seconds.
+4. The camera moves to a new framing about every 2.5 seconds without cutting, so the viewer never loses their bearings.
+5. The hook sentence returns at the end, and this time it is true.
 
-## 7. Yang diambil dan yang tidak
+## 7. What is taken and what is not
 
-Diambil, karena ini tata bahasa format yang umum di genre ini:
-- premis "versi paling sederhana" di hook (atas permintaan pengguna);
-- giliran masalah → solusi dengan sudut pandang "kamu";
-- satu kalimat = satu perubahan di layar; istilah disebut setelah fungsinya jelas;
-- satu lokasi yang terus berkembang; kamera bergerak tanpa potongan keras;
-- caption satu kata di tengah layar; penutup yang mengulang hook.
+Taken, because this is the common format grammar of the genre:
+- the "simplest version" premise in the hook (at the user's request);
+- turns of problem and solution, addressed to "you";
+- one sentence is one change on screen; a term is named after its function is clear;
+- one location that keeps developing; a camera that moves without hard cuts;
+- one-word captions in the middle of the screen; a close that repeats the hook.
 
-Tidak diambil:
-- kalimat dan susunan klausa naskahnya. Naskah kita ditulis dari fakta bersumber, bukan diterjemahkan;
-- urutan beat. Di naskah kita kolam terangkat dan katup hidrostatik menjadi klimaks di akhir, dan rantai "hijau → filter → kaporit" dipisah supaya lebih akurat (filter menahan kotoran, kaporit yang membunuh ganggang dan kuman);
-- perumpamaan dan lelucon. Milik kita: ember, mangkuk raksasa, sup hijau, bebek karet, berat 48 ton yang "hilang" saat dikuras;
-- desain set dan properti. Milik kita: rumah tropis, pagar tembok, tanaman lokal, maskot;
-- bentuk panah dan overlay, font caption yang persis sama, adegan penutup (milik kita: senja dengan lampu bawah air).
+Not taken:
+- the sentences and clause structure of its script. Our script is written from sourced facts, not translated;
+- the order of beats. In our script the floating pool and the hydrostatic valve are the climax at the end, and the chain "green water, filter, chlorine" is split up to be more accurate (the filter holds back dirt; the chlorine kills algae and germs);
+- the analogies and jokes. Ours: a bucket, a giant bowl, green soup, a rubber duck, the 48 tons of weight that "disappear" when the pool is drained;
+- the set design and props. Ours: a tropical house, a masonry wall, local plants, the mascot;
+- the shape of the arrows and overlays, the exact caption font, the closing scene (ours: dusk with underwater lights).
 
-## 8. Batas analisa ini
+## 8. Limits of this analysis
 
-- Transkrip direkonstruksi dari caption, jadi jumlah kata bisa meleset beberapa kata.
-- Jenis kelamin atau karakter suara tidak bisa dipastikan dari nada dasar saja.
-- "Tidak terdeteksi music bed" berarti tidak ada bunyi tetap di atas ±−45 dB di sela kata; musik yang sangat pelan bisa lolos dari ukuran ini.
-- Kualitas gerak (halus atau tidak) tidak bisa dinilai dari frame diam.
+- The transcript was reconstructed from the captions, so the word count can be off by a few words.
+- The speaker's gender or character cannot be determined from pitch alone.
+- "No music bed detected" means there is no steady sound above about -45 dB between words. Very quiet music could escape this measurement.
+- The quality of the motion (smooth or not) cannot be judged from still frames.

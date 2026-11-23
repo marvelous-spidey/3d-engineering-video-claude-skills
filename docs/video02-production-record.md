@@ -1,131 +1,131 @@
-# Video 02 — catatan produksi "Cara kerja kolam renang" (ID)
+# Video 02: production record of "Cara kerja kolam renang" (how a swimming pool works, ID)
 
-22 November 2026 · video kedua, video pertama yang memakai kit · berkasnya di `examples/video02-kolam-renang-id/` · versi 1.1 (warna dikoreksi) menggantikan versi pertama
+22 November 2026. The second video, and the first to use the kit. Its files are in `examples/video02-swimming-pool-id/`. Version 1.1 (colour corrected) replaces the first version.
 
-Catatan ini versi repo: tautan hasil, ID media, nama, dan lokasi penyimpanan pribadi dihilangkan. "Plan" yang disebut di sini adalah dokumen rencana internal yang tidak disertakan di repo.
+This is the repo version of the record: result links, media IDs, names and private storage locations have been removed. The "plan" mentioned here is an internal planning document that is not included in the repo.
 
-## Hasil
+## Result
 
-| Hal | Nilai |
+| Item | Value |
 |---|---|
-| Keluaran | video final v1.1 (44,1 MB) dengan caption dan suara, plus master bersih (tanpa caption, tanpa suara) |
-| Format | 1080×1920, 30 fps, 68,4 detik, H.264 (BT.709) + AAC, 44,1 MB, −14,5 LUFS (puncak −4,0 dBFS) |
-| Naskah | 188 kata (422 suku kata), 11 baris, bahasa Indonesia; kalimat hook dari pengguna; fakta dicek, tabelnya di `examples/video02-kolam-renang-id/script_id.md` |
-| Suara | ElevenLabs v4 lewat Higgsfield, preset "Marcus", tag tempo `[quick, energetic pace]`; jeda dirapatkan dan tempo dinaikkan 1,088× menjadi 66,48 detik |
-| Gambar | Scene Blender 834 objek dari `pool_video.py` (517 baris) di atas `explainer_kit.py` (470 baris); satu gerak kamera sinambung tanpa potongan keras |
-| Caption | satu kartu berisi 1–2 kata (164 kartu), Baloo 2 ExtraBold, kata kunci kuning (`post.py` video ini; sekarang `kit/captions.py`) |
-| Kredit | suara 16,66 + GPU 132,29 = **148,95** (batas yang disetujui: suara 20, GPU 200) |
+| Output | final video v1.1 (44.1 MB) with captions and sound, plus a clean master (no captions, no sound) |
+| Format | 1080x1920, 30 fps, 68.4 seconds, H.264 (BT.709) + AAC, 44.1 MB, -14.5 LUFS (peak -4.0 dBFS) |
+| Script | 188 words (422 syllables), 11 lines, Indonesian; the hook sentence came from the user; the facts were checked, and the table is in `examples/video02-swimming-pool-id/script_id.md` |
+| Voice | ElevenLabs v4 through Higgsfield, preset "Marcus", pace tag `[quick, energetic pace]`; pauses tightened and tempo raised by 1.088x to 66.48 seconds |
+| Picture | a Blender scene of 834 objects from `pool_video.py` (517 lines) on top of `explainer_kit.py` (470 lines); one continuous camera move with no hard cuts |
+| Captions | one card of one or two words (164 cards), Baloo 2 ExtraBold, key words in yellow (this video's `post.py`; now `kit/captions.py`) |
+| Credits | voice 16.66 + GPU 132.29 = **148.95** (approved limits: voice 20, GPU 200) |
 
-## Koreksi warna (versi 1.1, 22 November 2026)
+## Colour correction (version 1.1, 22 November 2026)
 
-**Temuan.** Saat kit dirapikan, warna caption di file final diukur: kuning yang seharusnya (255, 214, 58) terbaca (255, 207, 49). Uji dengan bidang warna menunjukkan sebabnya: perintah encode di `post.py` v2 menandai file sebagai BT.709 tetapi tidak memberi tahu ffmpeg untuk mengubah RGB ke YUV dengan matriks itu, sehingga yang dipakai BT.601. Akibatnya hijau tampil ±10% lebih gelap (140 menjadi 125) dan kuning sedikit bergeser di semua pemutar yang mematuhi tanda warna. Video #1 tidak terkena, karena `post.py` versi itu memakai filter `scale=out_color_matrix=bt709`.
+**Finding.** While the kit was being tidied up, the caption colour in the final file was measured: a yellow that should be (255, 214, 58) read as (255, 207, 49). A test with colour patches showed why. The encode command in `post.py` v2 tagged the file as BT.709 but did not tell ffmpeg to convert RGB to YUV with that matrix, so BT.601 was used. As a result green was about 10% darker (140 became 125) and yellow was slightly off in every player that honours the colour tag. Video #1 was not affected, because its version of `post.py` used the filter `scale=out_color_matrix=bt709`.
 
-**Perbaikan, tanpa kredit, di sandbox Higgsfield.** Frame dibaca dari master bersih dengan matriks BT.601 (warna asli kembali), caption yang sama dibakar ulang, lalu di-encode dengan matriks BT.709 yang benar (CRF 17). Suara disalin apa adanya dari versi pertama. Master bersih tidak di-encode ulang; hanya tanda matriksnya dibetulkan, jadi gambarnya identik.
+**Fix, without credits, in the Higgsfield sandbox.** The frames were read from the clean master with the BT.601 matrix (which restores the original colours), the same captions were burned in again, and the result was encoded with the correct BT.709 matrix (CRF 17). The audio was copied unchanged from the first version. The clean master was not re-encoded; only its matrix tag was corrected, so its picture is identical.
 
-**Pemeriksaan v1.1.** 2.052 frame, 68,4 detik, −14,5 LUFS; kuning caption terbaca (254, 213, 56); selisih rata-rata terhadap versi pertama yang dibaca sebagai BT.601 hanya 1,6 dari 255 (derau kompresi); md5 file yang diunggah sama dengan file hasil encode.
+**Checks on v1.1.** 2,052 frames, 68.4 seconds, -14.5 LUFS; the caption yellow reads (254, 213, 56); the mean difference from the first version read as BT.601 is only 1.6 out of 255 (compression noise); the md5 of the uploaded file equals that of the encoded file.
 
-**Pencegahan.** `kit/captions.py` selalu memakai filter matriks eksplisit, dan `kit/box/qa_final.py` membandingkan frame video dengan frame PNG dalam dua matriks dan mencetak `COLOUR OK` atau `COLOUR FAILED`.
+**Prevention.** `kit/captions.py` always uses an explicit matrix filter, and `kit/box/qa_final.py` compares video frames with the PNG frames under both matrices and prints `COLOUR OK` or `COLOUR FAILED`.
 
-**Catatan kecil lain dari sesi yang sama.** Dengan `align.py` v1.0, dua kata ("Lima" di awal baris S10 dan "Katup" di S11) kini dimulai tepat setelah jeda; di video ini caption dan cue kedua kata itu muncul ±0,25 detik terlalu awal. Tidak dirender ulang.
+**Another small note from the same session.** With `align.py` v1.0, two words ("Lima" at the start of line S10 and "Katup" in S11) now start right after a pause. In this video the captions and cues of those two words come about 0.25 seconds early. It was not re-rendered.
 
-## Jalur yang benar-benar dipakai
+## The route actually taken
 
-1. Naskah varian B dari plan dipakai tanpa perubahan kata; tabel cek fakta ada di `script_id.md`.
-2. Audisi lima suara dengan dua kalimat yang sama, diukur di sandbox Higgsfield, lalu VO penuh. Take 1 terlalu lambat (92,3 detik); take 2 memakai tag tempo di awal teks (78,4 detik).
-3. Olah audio (`kit/audio/vo_prep.py`): 75 jeda dirapatkan dari 15,5 menjadi 9,5 detik, tempo 1,088×, kenyaringan −14,4 LUFS.
-4. Waktu per kata (`asr.py` + `align.py`): 188 kata, 15 di antaranya diinterpolasi, 43 ditempel ke jeda nyata.
-5. Kit fungsi dipisah dari skrip video #1 (`kit/make_kit.py`), ditambah pencarian cue lewat ID kalimat dan kata.
-6. Scene ditulis sebagai kode dan diperiksa lewat lima putaran still CPU di workspace Claude.
-7. Box GPU `compute` 1× L40S: setup, 6 still uji 64 sampel, render 3 proses paralel.
-8. Pemeriksaan otomatis antar-frame menemukan cacat di render pertama; semua frame dirender ulang tanpa persistent data dan diperiksa lagi.
-9. Pemeriksaan yang sama pada render kedua menemukan kesalahan animasi titik aliran air; skrip diperbaiki dan dua rentang frame yang kena dirender ulang.
-10. Caption + encode, master bersih, QA file final, unggah, box dimatikan.
+1. Script variant B from the plan was used without changing a word; the fact-check table is in `script_id.md`.
+2. An audition of five voices with the same two sentences, measured in the Higgsfield sandbox, then the full voice-over. Take 1 was too slow (92.3 seconds); take 2 used a pace tag at the start of the text (78.4 seconds).
+3. Audio processing (`kit/audio/vo_prep.py`): 75 pauses tightened from 15.5 to 9.5 seconds, tempo 1.088x, loudness -14.4 LUFS.
+4. Word timings (`asr.py` + `align.py`): 188 words, 15 of them interpolated, 43 snapped to a real pause.
+5. The function kit was split off from the video #1 script (`kit/make_kit.py`), with cue lookup by sentence ID and word added.
+6. The scene was written as code and checked over five rounds of CPU stills in Claude's workspace.
+7. A `compute` GPU box with 1x L40S: setup, 6 test stills at 64 samples, a render with 3 parallel processes.
+8. An automatic frame-to-frame check found defects in the first render. Every frame was rendered again without persistent data and checked again.
+9. The same check on the second render found an animation mistake in the water flow dots. The script was fixed and the two affected frame ranges were rendered again.
+10. Captions and encoding, clean master, QA of the final file, upload, box shut down.
 
-## Cacat render pertama dan perbaikannya
+## The defect in the first render, and its fix
 
-**Gejala.** Pada render pertama, salah satu dari tiga proses menggambar objek yang baru berubah sebagai bentuk hitam pekat, sementara dua proses lain menggambarnya benar. Karena frame dibagi berselang ke tiga proses, hasilnya kedip 10 Hz. Contoh yang dilihat langsung: longsoran lumpur di lubang tampil hitam di frame 229–250 milik proses pertama (sampai 185.395 piksel hitam per frame), sedangkan frame 249, 251, 253 di sekitarnya normal.
+**Symptom.** In the first render, one of the three processes drew objects that had just changed as solid black shapes, while the other two drew them correctly. Because frames are dealt out to the three processes in turn, the result was a 10 Hz flicker. An example that was looked at directly: the mud slide in the pit was black on frames 229 to 250 of the first process (up to 185,395 black pixels per frame), while frames 249, 251 and 253 around them were normal.
 
-**Cara ketemu.** Bukan dari still. Enam still uji di box bersih. Contact sheet pertama dari frame hasil render hanya memperlihatkan satu segitiga hitam kecil dan melewatkan rentetan cacat di proses lain, karena semua frame contohnya (waktu kelipatan 0,1 detik) milik proses yang sama. Yang menangkap seluruhnya adalah skor "frame yang berbeda dari kedua tetangganya" pada thumbnail semua frame (`kit/box/scan.py`), ditambah hitungan piksel hitam pekat.
+**How it was found.** Not from stills. The six test stills on the box were clean. The first contact sheet from the rendered frames showed only one small black triangle and missed the runs of defects in the other processes, because all of its sample frames (times that are multiples of 0.1 seconds) belonged to the same process. What caught all of it was a score for "a frame that differs from both of its neighbours" on thumbnails of every frame (`kit/box/scan.py`), together with a count of pure black pixels.
 
-**Ukuran masalah.** Dari 1.218 frame pertama, 239 ditandai tersangka (proses 0: 23, proses 1: 43, proses 2: 173), berupa rentetan panjang pada satu proses, misalnya proses 2 dari detik 2,97 sampai 7,47 dan dari 9,47 sampai 17,17. Pembanding langsung untuk frame 1–180: 31 frame render pertama berbeda dari render ulang, semuanya milik proses 2; frame yang lain sama sampai selisih 0,07 dari 255 per blok.
+**Size of the problem.** Of the first 1,218 frames, 239 were flagged as suspects (process 0: 23, process 1: 43, process 2: 173), in long runs within one process, for example process 2 from 2.97 to 7.47 seconds and from 9.47 to 17.17 seconds. A direct comparison of frames 1 to 180: 31 frames of the first render differed from the re-render, all of them from process 2, and the other frames matched to within 0.07 out of 255 per block.
 
-**Sebab.** Opsi `use_persistent_data` Cycles, yang menyimpan data scene antar-frame di tiap proses. Proses baru yang langsung melompat ke frame bermasalah menggambarnya dengan benar, jadi kesalahannya ada di keadaan yang terbawa, bukan di scene. Mekanisme pastinya belum dibuktikan (dugaan ada di `pipeline-runbook.md` bagian 12).
+**Cause.** The Cycles option `use_persistent_data`, which keeps scene data between frames in each process. A fresh process that jumps straight to a problem frame draws it correctly, so the fault is in the state that is carried over, not in the scene. The exact mechanism has not been proven (a guess is in `pipeline-runbook.md` section 12).
 
-**Perbaikan.** Persistent data dimatikan (`KIT_PERSIST=0`; sekarang bawaan kit) dan semua 2.052 frame dirender ulang. Render pertama dihentikan di frame 1.504 dan tidak dipakai. Scan pada render ulang: tidak ada lagi rentetan tersangka pada satu proses dan tidak ada objek hitam. Yang tersisa, 64 tersangka yang tersebar rata di ketiga proses, ternyata berasal dari kesalahan animasi di bagian berikut.
+**Fix.** Persistent data was turned off (`KIT_PERSIST=0`, now the kit default) and all 2,052 frames were rendered again. The first render was stopped at frame 1,504 and not used. The scan of the re-render shows no more runs of suspects within one process and no black objects. What remained, 64 suspects spread evenly over the three processes, turned out to come from the animation mistake described in the next section.
 
-**Biaya.** Render pertama memakan ±28 menit box (±33 kredit) yang terbuang. Tanpa persistent data kecepatannya 0,74 frame per detik (2.052 frame dalam 46 menit 25 detik), dibanding 0,90–0,95 dengan persistent data.
+**Cost.** The first render used about 28 minutes of box time (about 33 credits) that were wasted. Without persistent data the speed is 0.74 frames per second (2,052 frames in 46 minutes 25 seconds), compared with 0.90 to 0.95 with it.
 
-**Video #1.** Dirender dengan persistent data juga. Scan pada master bersihnya (di sandbox, gratis) menemukan 5 tersangka dari 1.980 frame, dan kelimanya gerak cepat yang sah (ayunan sekop, papan nama saat kamera bergerak, truk melintas). Video #1 tidak terkena.
+**Video #1.** It was rendered with persistent data too. A scan of its clean master (in the sandbox, free) found 5 suspects in 1,980 frames, all of them legitimate fast motion (a swinging shovel, a sign while the camera moves, a truck passing). Video #1 was not affected.
 
-## Kesalahan animasi yang ikut tertangkap
+## An animation mistake that was caught as well
 
-Setelah render kedua bersih dari cacat di atas, scan masih menandai 64 frame, tersebar rata di ketiga proses. Potongan tiga frame berurutan untuk 12 tersangka terkuat memperlihatkan sebabnya, dan kali ini sebabnya ada di skrip scene:
+After the second render was free of the defect above, the scan still flagged 64 frames, spread evenly over the three processes. Crops of three consecutive frames for the 12 strongest suspects showed the cause, and this time the cause was in the scene script.
 
-**Titik aliran air.** Tiap titik berjalan di sepanjang lintasan pipa lalu melompat kembali ke awal. Kunci "titik terakhir" dan kunci "titik pertama putaran berikutnya" jatuh pada waktu yang persis sama, dan Blender mengganti kunci yang lama bila ada kunci baru di frame yang sama. Akibatnya ruas terakhir tiap lintasan tidak pernah dilalui: titik terbang lurus dari titik kedua-terakhir ke titik awal. Di layar, titik air melayang di luar pipa (dari dasar pipa naik pompa ke skimmer), melesat melintasi kolam (jalur balik), dan air dari katup hidrostatik naik-turun di lubangnya alih-alih menyebar ke kolam. Perbaikan: kunci titik terakhir dimajukan 0,004 detik.
+**Water flow dots.** Each dot travels along the pipe path and then jumps back to the start. The key for "the last point" and the key for "the first point of the next loop" fell at exactly the same time, and Blender replaces the old key when a new one lands on the same frame. So the last segment of every path was never travelled: the dot flew straight from the second-to-last point to the start. On screen, water dots floated outside the pipe (from the bottom of the pump riser to the skimmer), shot across the pool (the return line), and the water from the hydrostatic valve bobbed up and down in its hole instead of spreading into the pool. Fix: the key of the last point was moved 0.004 seconds earlier.
 
-**Garis bau.** Kunci yang ditambahkan setelah `show()` atau `extend()` mewarisi interpolasi CONSTANT dari kunci sebelumnya, jadi denyut garis bau menjadi gelombang kotak dengan satu kedipan sepanjang 1,5 frame di detik 41,6. Perbaikan: interpolasi BEZIER diberikan eksplisit dan denyut diakhiri di kelipatan periode.
+**Odour lines.** A key added after `show()` or `extend()` inherits CONSTANT interpolation from the key before it, so the pulse of the odour lines became a square wave with one flicker 1.5 frames long at 41.6 seconds. Fix: BEZIER interpolation is passed explicitly, and the pulse ends on a multiple of its period.
 
-Kedua kesalahan ini lolos dari lima putaran still karena still hanya memperlihatkan posisi di satu waktu; titik yang melayang terlihat seperti titik biasa. Yang dirender ulang hanya frame yang terpengaruh: 695–1262 dan 1680–1849 (738 frame). Tiga frame di luar rentang itu dirender ulang sebagai pembanding untuk memastikan perbaikan tidak mengubah bagian lain. Hasilnya: ketiga frame pembanding sama dengan frame lama (selisih blok terbesar 0,06 dari 255), tersangka turun dari 64 menjadi 24, dan 12 yang terkuat semuanya gerak yang sah (gerak kamera cepat, tag yang muncul dengan pantulan, kuman dan cipratan yang bergerak).
+Both mistakes got through five rounds of stills because a still shows only a position at one moment, and a floating dot looks like any other dot. Only the affected frames were rendered again: 695 to 1262 and 1680 to 1849 (738 frames). Three frames outside those ranges were re-rendered as controls, to make sure the fix did not change anything else. The result: all three control frames matched the old frames (largest block difference 0.06 out of 255), the suspects fell from 64 to 24, and the 12 strongest were all legitimate motion (fast camera moves, tags appearing with overshoot, moving germs and splashes).
 
-Versi sebelum perbaikan sempat terunggah; sudah digantikan dan tidak dipakai.
+The version from before the fix had already been uploaded. It was replaced and is not used.
 
-## Angka terukur
+## Measured numbers
 
-| Hal | Terukur |
+| Item | Measured |
 |---|---|
-| Setup box | ±3 menit (sempat berjalan dobel karena salah perintah; normalnya ±80 detik) |
-| Still uji 1080×1920, 64 sampel + denoise, 1 proses | 1,3–1,7 detik per frame |
-| Render pertama, 3 proses, persistent data hidup | 0,90–0,95 frame per detik; GPU 94% terpakai |
-| Render ulang, 3 proses, persistent data mati | 2.052 frame dalam 46 menit 25 detik (0,74 frame per detik); GPU 99% terpakai |
-| Render ulang sebagian setelah perbaikan animasi | 738 frame dalam 17 menit 18 detik |
-| Caption + encode + master bersih + scan (bersamaan) | 2 menit 38 detik untuk kedua encode; ±3 menit sampai contact sheet selesai |
-| Total box menyala | 1 jam 51 menit 47 detik = 132,29 kredit (batas yang disetujui: 200) |
-| Suara | audisi 4,70 (4 × 1,15 + 0,10) + take 1 5,98 + take 2 5,98 = 16,66 kredit |
+| Box setup | about 3 minutes (it ran twice because of a wrong command; normally about 80 seconds) |
+| Test still at 1080x1920, 64 samples + denoise, 1 process | 1.3 to 1.7 seconds per frame |
+| First render, 3 processes, persistent data on | 0.90 to 0.95 frames per second; GPU 94% busy |
+| Re-render, 3 processes, persistent data off | 2,052 frames in 46 minutes 25 seconds (0.74 frames per second); GPU 99% busy |
+| Partial re-render after the animation fix | 738 frames in 17 minutes 18 seconds |
+| Captions + encode + clean master + scan (together) | 2 minutes 38 seconds for both encodes; about 3 minutes until the contact sheets were done |
+| Total box running time | 1 hour 51 minutes 47 seconds = 132.29 credits (approved limit: 200) |
+| Voice | audition 4.70 (4 x 1.15 + 0.10) + take 1 at 5.98 + take 2 at 5.98 = 16.66 credits |
 
-## Audisi suara
+## Voice audition
 
-Dua kalimat yang sama (33 kata) untuk tiap suara, diukur dengan `kit/audio/audition.py`.
+The same two sentences (33 words) for each voice, measured with `kit/audio/audition.py`.
 
-| Suara | Durasi klip | Total jeda | Suku kata per detik saat bicara | Kata dikenali | Nada dasar | Kenyaringan |
+| Voice | Clip length | Total pauses | Syllables per second while speaking | Words recognised | Pitch | Loudness |
 |---|---|---|---|---|---|---|
-| Cillian (Eleven v4) | 15,8 dtk | 3,4 dtk | 6,3 | 29 dari 33 | 140 Hz | −18,4 LUFS |
-| **Marcus (Eleven v4)** | 16,1 dtk | 3,8 dtk | 6,3 | 32 dari 33 | 140 Hz | −21,3 LUFS |
-| Julian (Eleven v4) | 15,7 dtk | 3,1 dtk | 6,2 | 31 dari 33 | 136 Hz | −19,5 LUFS |
-| Maya (Eleven v4) | 16,0 dtk | 3,8 dtk | 6,4 | 32 dari 33 | 211 Hz | −17,9 LUFS |
-| Qwen Audio 3.0 TTS Flash | 21,5 dtk | 6,0 dtk | 5,0 | 31 dari 33 | 123 Hz | −12,4 LUFS |
+| Cillian (Eleven v4) | 15.8 s | 3.4 s | 6.3 | 29 of 33 | 140 Hz | -18.4 LUFS |
+| **Marcus (Eleven v4)** | 16.1 s | 3.8 s | 6.3 | 32 of 33 | 140 Hz | -21.3 LUFS |
+| Julian (Eleven v4) | 15.7 s | 3.1 s | 6.2 | 31 of 33 | 136 Hz | -19.5 LUFS |
+| Maya (Eleven v4) | 16.0 s | 3.8 s | 6.4 | 32 of 33 | 211 Hz | -17.9 LUFS |
+| Qwen Audio 3.0 TTS Flash | 21.5 s | 6.0 s | 5.0 | 31 of 33 | 123 Hz | -12.4 LUFS |
 
-Marcus dipilih karena paling banyak kata yang dikenali mesin transkripsi di antara suara pria (satu-satunya selisih, "pompa" terdengar "pompah", muncul di semua suara). Ini pilihan dari ukuran, bukan dari telinga. Pilihan dengan telinga manusia tetap lebih baik; ukuran hanya menyaring.
+Marcus was chosen because the transcription engine recognised the most words among the male voices (the only miss, "pompa" heard as "pompah", occurred with every voice). This is a choice made from measurements, not by ear. A choice by a human ear is still better; the measurements only narrow the field.
 
-## Koreksi terhadap plan
+## Corrections to the plan
 
-- **Gerbang review dilewati.** Plan menyediakan G1 (pengguna memilih suara), G2 (still di chat), dan G3 (animatic). Pengguna meminta langsung dieksekusi, jadi pilihan bawaan plan dipakai dan review baru terjadi pada video jadi.
-- **Biaya GPU.** Plan memperkirakan ±65–100 kredit untuk render final; kenyataannya 132,29 karena satu render terbuang dan sepertiga frame dirender ulang setelah perbaikan animasi. Scene ini ±25% lebih berat daripada video #1 (0,95 dibanding 1,2 frame per detik pada 3 proses dengan persistent data), jauh di bawah dugaan plan 1,5–2,5×.
-- **Tempo suara.** Plan memperkirakan 6,0–7,0 suku kata per detik. Tanpa tag tempo, preset membaca ±4,6; dengan tag dan pengolahan, hasil akhirnya ±6,3.
-- **Teks di layar.** Plan menyebut empat tag; yang dibuat tujuh jenis (`HARI 1/3/5` dan `KAPORIT` ditambahkan).
-- **Kit.** Rencana "pisahkan kit lalu uji regresi pada video #1" baru separuh jalan: kit dipakai penuh oleh video #2, uji ulang pada still video #1 belum dijalankan.
+- **Review gates were skipped.** The plan had G1 (the user chooses the voice), G2 (stills in the chat) and G3 (an animatic). The user asked to go straight to production, so the plan's defaults were used and the first review was of the finished video.
+- **GPU cost.** The plan estimated 65 to 100 credits for the final render. The real figure was 132.29, because one render was wasted and a third of the frames were rendered again after the animation fix. This scene is about 25% heavier than video #1 (0.95 against 1.2 frames per second with 3 processes and persistent data), far below the plan's guess of 1.5 to 2.5 times.
+- **Voice pace.** The plan estimated 6.0 to 7.0 syllables per second. Without a pace tag the preset reads at about 4.6; with the tag and processing the final result is about 6.3.
+- **On-screen text.** The plan named four tags; seven kinds were made (`HARI 1/3/5` and `KAPORIT` were added).
+- **Kit.** The plan to "split off the kit, then run a regression test on video #1" is half done: video #2 uses the kit fully, but the re-test against the video #1 stills has not been run.
 
-## Pelajaran untuk video berikutnya
+## Lessons for the next video
 
-- Scan semua frame sebelum encode, dan jangan menilai animasi dari still saja. Scan yang sama menangkap dua jenis masalah: cacat render dan kesalahan animasi.
-- Lihat potongan tiga frame berurutan untuk tersangka terkuat (`trip_png.py`); angka skor saja tidak menjelaskan apa yang salah.
-- Untuk tiap gerak berulang, cetak daftar kunci satu objek contoh sebelum render. Dua kunci di waktu yang sama saling mengganti, dan kunci baru mewarisi interpolasi kunci sebelumnya.
-- Contact sheet harus mengambil frame dari ketiga fase proses.
-- Render tanpa persistent data; harganya kecil.
-- Selama box menyala, kerjakan hanya yang butuh box. Alat analisa yang berat memperlambat render karena box hanya 4 vCPU.
-- Tag tempo di awal teks lebih murah daripada take ulang; rapatkan jeda sebelum menaikkan tempo.
-- Cue lewat `T(id kalimat, kata)` membuat naskah bisa diganti tanpa menyentuh angka waktu.
-- Rincian teknis lain (interpolasi kunci, permukaan sebidang, perintah shell yang menjebak) ada di `pipeline-runbook.md` bagian 9.
+- Scan every frame before encoding, and do not judge an animation from stills alone. The same scan caught two kinds of problem: a render defect and an animation mistake.
+- Look at crops of three consecutive frames for the strongest suspects (`trip_png.py`). A score alone does not say what is wrong.
+- For every looping motion, print the key list of one sample object before rendering. Two keys at the same time replace each other, and a new key inherits the interpolation of the key before it.
+- The contact sheet must take frames from all three process phases.
+- Render without persistent data. It costs little.
+- While the box is on, do only what needs the box. A heavy analysis tool slows the render because the box has only 4 vCPUs.
+- A pace tag at the start of the text is cheaper than another take. Tighten the pauses before raising the tempo.
+- Cues through `T(sentence id, word)` let the script change without touching any timing number.
+- Other technical details (key interpolation, coplanar surfaces, shell commands that trip you up) are in `pipeline-runbook.md` section 9.
 
-## Lokasi file di repo
+## Where the files are in this repo
 
-- `examples/video02-kolam-renang-id/`: skrip scene (sudah dalam bentuk job kit v1.0), `job.env`, `script.txt`, `keywords.txt`, `words.json`, `script_id.md` (naskah, gambar per baris, cek fakta, sumber), dan contact sheet preview.
-- `kit/`: kode yang dipakai (versi 1.0, hasil merapikan alat video ini).
-- File video, suara, frame PNG, dan `.blend` tidak disertakan.
+- `examples/video02-swimming-pool-id/`: the scene script (already in the form of a kit v1.0 job), `job.env`, `script.txt`, `keywords.txt`, `words.json`, `script_id.md` (script, picture per line, fact check, sources), and preview contact sheets.
+- `kit/`: the code that was used (version 1.0 is the tidied-up version of this video's tools).
+- Video files, audio, PNG frames and the `.blend` are not included.
 
-## Yang belum dikerjakan
+## Not done
 
-- Musik dan efek suara. Bisa ditambahkan di atas master bersih tanpa GPU.
-- Audio belum didengarkan manusia, dan gerak belum ditonton; Claude hanya mengukur dan melihat frame. Yang diukur pada file final: 2.052 frame, 68,4 detik, −14,5 LUFS; md5 file di link sama dengan file di box; transkripsi ulang mengenali 172 dari 188 kata, dan pada 170 kata yang bisa dibandingkan awal kata bergeser median 0,00 detik (95% ≤ 0,02 detik) dari posisi yang direncanakan, 95% ≤ 0,08 detik terhadap waktu caption. Mesin transkripsi mendengar tiga kata sedikit berbeda ("diam" → "biam" di detik ±21, "mangkuk" → "mangku" di detik ±48, "karet" → "karep" di detik ±63); itu bagian yang paling layak didengarkan.
-- Suara dipilih dari ukuran. Bila suara diganti, VO, waktu per kata, dan render harus diulang.
-- Nama channel, watermark, cover.
-- Review manusia atas look, maskot, tempo caption, dan pelafalan.
+- Music and sound effects. They can be added on top of the clean master without a GPU.
+- No human has listened to the audio or watched the motion; Claude only measured and looked at frames. Measured on the final file: 2,052 frames, 68.4 seconds, -14.5 LUFS; the md5 of the file at the link equals the file on the box; a second transcription recognised 172 of 188 words, and for the 170 words that could be compared, word starts are off by a median of 0.00 seconds (95% within 0.02 seconds) from their planned position, and 95% within 0.08 seconds of the caption timing. The transcription engine heard three words slightly differently ("diam" as "biam" at about 21 seconds, "mangkuk" as "mangku" at about 48 seconds, "karet" as "karep" at about 63 seconds). Those are the parts most worth listening to.
+- The voice was chosen from measurements. If the voice changes, the voice-over, the word timings and the render must all be redone.
+- Channel name, watermark, cover image.
+- Human review of the look, the mascot, the caption pace and the pronunciation.

@@ -1,90 +1,90 @@
-# Video 03 — bedah video contoh (mesin turbo, bahasa Inggris)
+# Video 03: teardown of the sample video (turbo engine, English)
 
-23 November 2026 · contoh keluaran skill `reference-short-teardown` · alat ukurnya `kit/ref_teardown.py`
+23 November 2026. A sample output of the `reference-short-teardown` skill. The measuring tool is `kit/ref_teardown.py`.
 
-Catatan ini versi repo: nama file dan sidik file video referensi dihilangkan. Naskah video referensi tidak pernah dicatat di sini; tabel struktur hanya memuat fungsi tiap beat.
+This is the repo version: the file name and fingerprint of the reference video have been removed. The script of the reference video was never recorded here; the structure table lists only the function of each beat.
 
-Claude tidak bisa menonton gerak atau mendengar audio. Semua isi dokumen ini berasal dari frame diam, pembacaan caption (OCR), dan pengukuran sinyal.
+Claude cannot watch motion or hear audio. Everything in this document comes from still frames, reading the captions (OCR) and signal measurements.
 
-## 1. Angka terukur
+## 1. Measured numbers
 
-| Hal | Nilai |
+| Item | Value |
 |---|---|
-| Sumber | video pendek berbahasa Inggris tentang mesin empat silinder turbo bertenaga 1.000 hp, diberikan pengguna sebagai contoh format (nama kreator tidak tercatat pada file yang dibedah) |
-| Gambar | H.264 720×1280, 30 fps asli (frame kembar 0,5%), 2.371 frame, 79,0 detik |
-| Suara | AAC 44,1 kHz stereo, −14,1 LUFS, rentang 1,8 LU |
-| Narasi | ±221 kata dalam 77,4 detik = ±2,9 kata per detik, 15 kalimat, suara pria (nada median 152 Hz) |
-| Jeda | tidak ada jeda ≥ 0,18 detik di bawah −38 dB; lantai suara ±−33 dB, jadi ada alas suara (musik atau efek) di bawah narasi |
-| Caption | frasa 2–3 kata di ±78% tinggi layar, huruf putih membulat bergaris tepi gelap; kata yang belum diucapkan tampil redup lalu terisi |
-| Kamera | tanpa potongan keras; 15 gerak cepat, median 3,1 detik per gerak; 82% waktu kamera bergerak cepat, 17% hanyut pelan |
+| Source | an English-language short about a turbocharged four-cylinder engine making 1,000 hp, given by the user as a format example (no creator name is recorded in the file) |
+| Picture | H.264 720x1280, native 30 fps (0.5% duplicate frames), 2,371 frames, 79.0 seconds |
+| Audio | AAC 44.1 kHz stereo, -14.1 LUFS, range 1.8 LU |
+| Narration | about 221 words in 77.4 seconds, or about 2.9 words per second; 15 sentences; a male voice (median pitch 152 Hz) |
+| Pauses | no pause of 0.18 seconds or more below -38 dB; the noise floor is about -33 dB, so there is a bed of sound (music or effects) under the narration |
+| Captions | phrases of 2 or 3 words at about 78% of the screen height, rounded white letters with a dark outline; words not yet spoken are dim and then fill in |
+| Camera | no hard cuts; 15 fast moves, median 3.1 seconds each; the camera moves fast 82% of the time and drifts slowly 17% of the time |
 
-Jumlah kata dihitung dari transkrip kerja hasil OCR caption; selisih beberapa kata mungkin. File video referensi tidak disertakan di repo.
+The word count comes from a working transcript made by OCR of the captions and may be off by a few words. The reference video file is not included in the repo.
 
-## 2. Struktur beat
+## 2. Beat structure
 
-Waktu dibaca dari contact sheet 1 frame per detik (±0,5 detik). Tabel mencatat fungsi tiap beat, bukan kalimat atau isinya.
+Timings were read from a contact sheet at 1 frame per second (to about half a second). The table lists the function of each beat, not its sentences or content.
 
-| # | Detik | Fungsi | Kata |
+| # | Seconds | Function | Words |
 |---|---|---|---|
-| 1 | 0–7 | hook | 17 |
-| 2 | 7–11 | masalah | 12 |
-| 3 | 11–16,5 | solusi | 16 |
-| 4 | 16,5–22 | masalah | 19 |
-| 5 | 22–25 | solusi | 7 |
-| 6 | 25–31 | masalah | 16 |
-| 7 | 31–38 | solusi | 20 |
-| 8 | 38–42,5 | penamaan | 9 |
-| 9 | 42,5–49 | masalah | 18 |
-| 10 | 49–54 | solusi | 15 |
-| 11 | 54–61 | masalah | 20 |
-| 12 | 61–66 | solusi | 13 |
-| 13 | 66–69 | pelengkap | 11 |
-| 14 | 69–74 | hasil | 16 |
-| 15 | 74–78 | penutup | 12 |
+| 1 | 0-7 | hook | 17 |
+| 2 | 7-11 | problem | 12 |
+| 3 | 11-16.5 | solution | 16 |
+| 4 | 16.5-22 | problem | 19 |
+| 5 | 22-25 | solution | 7 |
+| 6 | 25-31 | problem | 16 |
+| 7 | 31-38 | solution | 20 |
+| 8 | 38-42.5 | naming | 9 |
+| 9 | 42.5-49 | problem | 18 |
+| 10 | 49-54 | solution | 15 |
+| 11 | 54-61 | problem | 20 |
+| 12 | 61-66 | solution | 13 |
+| 13 | 66-69 | addition | 11 |
+| 14 | 69-74 | result | 16 |
+| 15 | 74-78 | close | 12 |
 
-Pola: hook, lima pasang masalah → solusi dengan taruhan yang naik, satu beat penamaan di tengah, lalu hasil dan rekap. Ini tata bahasa yang sama dengan referensi #2.
+Pattern: a hook, five pairs of problem and solution with rising stakes, one naming beat in the middle, then the result and a recap. This is the same grammar as reference #2.
 
-## 3. Bahasa visual
+## 3. Visual language
 
-- **Set**: satu mesin di dudukan beroda, di dalam bengkel.
-- **Model**: sangat rinci dan mendekati foto. Bagian dalam dibuka dengan bidang potong berwarna.
-- **Kamera**: mengorbit mesin, lalu masuk ke bidang potong untuk tiap masalah, keluar lagi untuk tiap solusi; ada blur gerak.
-- **Tag**: label dengan garis penunjuk; warna lain untuk bahaya. Angka tampil sebagai alat ukur digital.
-- **Gerak**: komponen bergerak dan bertukar di tempat, kilat pada kegagalan.
-- **Tanpa karakter** manusia atau maskot.
+- **Set**: one engine on a wheeled stand, inside a workshop.
+- **Model**: very detailed and close to photographic. The inside is opened with a coloured cut face.
+- **Camera**: orbits the engine, moves into the cut face for each problem and out again for each solution; there is motion blur.
+- **Tags**: labels with leader lines; a different colour for danger. Numbers are shown as digital gauges.
+- **Motion**: parts move and are swapped in place, with a flash at each failure.
+- **No characters**, human or mascot.
 
-## 4. Diambil / tidak diambil
+## 4. Taken / not taken
 
-Diambil (tata bahasa format):
+Taken (format grammar):
 
-- topik dan panjang (±75–80 detik), tempo padat tanpa jeda;
-- caption frasa 2–3 kata yang terisi per kata;
-- satu objek di satu set, kamera sinambung yang masuk dan keluar bidang potong;
-- angka sebagai alat ukur di layar;
-- rantai masalah → solusi dan penutup yang kembali ke angka awal.
+- the topic and the length (about 75 to 80 seconds), a dense pace with no pauses;
+- captions of 2 or 3 words that fill in word by word;
+- one object on one set, with a continuous camera that moves into and out of the cut face;
+- numbers shown as gauges on screen;
+- the chain of problem and solution, and a close that returns to the opening number.
 
-Tidak diambil:
+Not taken:
 
-- kalimat, perumpamaan, dan urutan detail naskahnya; naskah kita disusun ulang menjadi "tiga musuh" (tekanan, putaran, panas);
-- model mesin, set, dan propertinya; mesin kita dibangun sendiri dari kode;
-- palet warna dan gaya tag; kita memakai bidang potong kuning dan tag gaya seri sendiri;
-- footage, audio, musik, dan efek teks;
-- angka-angkanya: tiap angka di naskah kita dicek sendiri (lihat `examples/video03-mesin-crv-id/script_id.md`).
+- the sentences, analogies and order of detail of its script; ours is reorganised around "three enemies" (pressure, revs, heat);
+- the engine model, the set and its props; our engine is built from code;
+- the colour palette and the tag style; we use a yellow cut face and the tags of our own series;
+- footage, audio, music and text effects;
+- its numbers: every number in our script was checked independently (see `examples/video03-crv-engine-id/script_id.md`).
 
-## 5. Implikasi produksi
+## 5. Production implications
 
-| Hal | Pilihan |
+| Item | Choice |
 |---|---|
 | `CAPTION_STYLE` | `phrases` |
-| Kamera | satu gerak sinambung, tanpa potongan keras (seperti video #2) |
-| Target durasi | 73–78 detik |
-| Anggaran naskah Indonesia | 79 × 6,3 ≈ 500 suku kata paling banyak; naskah yang dipakai ±459 suku kata |
-| Hal baru untuk scene | gerak engkol-piston yang dipanggang per frame, per (heliks), alat ukur dan penghitung angka, lampu ruang dalam, material logam |
-| Risiko terbesar | tingkat rincian model: model referensi jauh lebih rinci daripada yang bisa dibangun dari bentuk dasar |
+| Camera | one continuous move, no hard cuts (as in video #2) |
+| Target duration | 73 to 78 seconds |
+| Indonesian script budget | 79 x 6.3 is about 500 syllables at most; the script used has about 459 |
+| New for the scene | crank and piston motion baked per frame, springs (helices), gauges and a number counter, interior lighting, metal materials |
+| Biggest risk | the level of detail: the reference model is far more detailed than anything that can be built from basic shapes |
 
-## 6. Batas analisa
+## 6. Limits of the analysis
 
-- Musik atau efek di bawah narasi terdeteksi dari lantai suara, tetapi tidak bisa dipisahkan atau dikenali.
-- Waktu beat dibaca per detik, bukan per frame.
-- OCR caption berisik (latar ramai); jumlah kata ±5.
-- Kebenaran isi video referensi tidak dinilai di sini; lihat tabel cek fakta.
+- Music or effects under the narration were detected from the noise floor but cannot be separated or identified.
+- Beat timings were read per second, not per frame.
+- The caption OCR is noisy (busy background); the word count is good to about 5 words.
+- Whether the content of the reference video is correct was not assessed here; see the fact-check table.

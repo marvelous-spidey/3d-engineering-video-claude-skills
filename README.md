@@ -1,97 +1,98 @@
-# 3D Engineering Video — skill Claude untuk short penjelasan teknik 3D
+# 3D Engineering Video: Claude skills for short 3D engineering explainers
 
-Tiga skill untuk Claude dan satu kit kode yang membuat video pendek vertikal (9:16, 60–75 detik) tentang cara kerja benda atau sistem teknik: gambar potongan 3D dibangun dari kode Blender, narasi dari suara AI, caption muncul per kata, dan semua gerak mengikuti waktu kata di narasi.
+Three skills for Claude and a code kit that produce short vertical videos (9:16, 60 to 75 seconds) explaining how a machine or an engineered system works. The 3D cutaway is built from Blender code, the narration is an AI voice, captions appear word by word, and every motion is timed to the words of the narration.
 
-Alur ini sudah dipakai untuk tiga video: "How a Septic System Works" (Inggris), "Cara kerja kolam renang" (Indonesia), dan "Mesin CR-V tembus seribu tenaga kuda" (Indonesia, dibuat dari video referensi berbahasa Inggris).
+Three videos have been made this way so far: "How a Septic System Works" (English), "Cara kerja kolam renang" (how a swimming pool works, Indonesian), and "Mesin CR-V tembus seribu tenaga kuda" (how a CR-V engine reaches 1,000 hp, Indonesian, made from an English reference video).
 
-![Mesin CR-V tembus seribu tenaga kuda](examples/video03-mesin-crv-id/preview/contact_sheet_1.jpg)
-![Cara kerja kolam renang](examples/video02-kolam-renang-id/preview/contact_sheet_1.jpg)
+![How a CR-V engine reaches 1,000 hp](examples/video03-crv-engine-id/preview/contact_sheet_1.jpg)
+![How a swimming pool works](examples/video02-swimming-pool-id/preview/contact_sheet_1.jpg)
 ![How a Septic System Works](examples/video01-septic-system-en/preview/contact_sheet_1.jpg)
 
-*English summary: three Claude skills (written in Indonesian) plus a Python/Blender kit that turn a script or a reference short into a narrated 3D cutaway explainer video. Claude writes the scene as code, Higgsfield provides the AI voice and a rented GPU for rendering. It works with English scripts too.*
+## What you can make
 
-## Yang bisa dibuat
-
-| Kamu memberi | Claude membuat |
+| You give Claude | Claude makes |
 |---|---|
-| Naskah bahasa Indonesia | video berbahasa Indonesia; naskahmu dipakai apa adanya |
-| Naskah bahasa Inggris | video berbahasa Inggris |
-| Video referensi (Inggris atau Indonesia) | video baru dalam bahasa sebaliknya, dengan naskah yang ditulis ulang dari fakta yang dicek |
-| Topik saja | Claude meriset, menulis naskah, lalu membuat videonya |
+| A script in English | a video in English; your script is used as written |
+| A script in Indonesian | a video in Indonesian |
+| A reference video (English or Indonesian) | a new video in the other language, with a script rewritten from facts that were checked independently |
+| Only a topic | Claude researches it, writes the script, then makes the video |
 
-## Yang kamu butuhkan
+English and Indonesian are the two languages that have been tested.
 
-1. **Claude dengan skill dan eksekusi kode aktif.** Skill berjalan di workspace Linux milik Claude; di komputermu tidak perlu ada Blender atau GPU. Lihat [Use skills in Claude](https://support.claude.com/en/articles/12512180).
-2. **Akun Higgsfield berlangganan yang punya kredit, terhubung ke Claude sebagai konektor MCP.** Higgsfield dipakai untuk suara (ElevenLabs v4), sandbox pengolah audio, dan sewa GPU untuk render. Cara menghubungkannya ada di [halaman MCP Higgsfield](https://higgsfield.ai/mcp) dan [pusat bantuannya](https://higgsfield.ai/creator-hub/help-center/integrations/how-do-i-connect-higgsfield-to-claude).
+## What you need
 
-Tidak ada API key yang perlu dipasang: Higgsfield tersambung lewat konektor dengan login akunmu sendiri.
+1. **Claude with skills and code execution turned on.** The skills run in Claude's own Linux workspace. You do not need Blender or a GPU on your computer. See [Use skills in Claude](https://support.claude.com/en/articles/12512180).
+2. **A paid Higgsfield account with credits, connected to Claude as an MCP connector.** Higgsfield provides the voice (ElevenLabs v4), a sandbox for audio processing, and a rented GPU for rendering. Setup is described on the [Higgsfield MCP page](https://higgsfield.ai/mcp) and in its [help center](https://higgsfield.ai/creator-hub/help-center/integrations/how-do-i-connect-higgsfield-to-claude).
 
-## Memasang
+There is no API key to install. Higgsfield is connected through the connector, with your own account login.
 
-1. Hubungkan Higgsfield ke Claude (tautan di atas).
-2. Unduh tiga berkas ZIP di folder [`dist/`](dist/), satu untuk tiap skill.
-3. Di Claude buka **Customize > Skills**, pilih **+**, lalu **Create skill > Upload a skill**, dan unggah ZIP itu satu per satu. Aktifkan ketiganya. Rincian langkahnya ada di [artikel bantuan Claude](https://support.claude.com/en/articles/12512180).
+## Install
 
-Kit kode tidak perlu dipasang sendiri. Saat pertama dipakai, skill mengambilnya dari repo ini dengan `git clone` dan memasang Blender sebagai modul Python di workspace Claude (±1 GB, beberapa menit).
+1. Connect Higgsfield to Claude (links above).
+2. Download the three ZIP files in [`dist/`](dist/), one per skill.
+3. In Claude, open **Customize > Skills**, choose **+**, then **Create skill > Upload a skill**, and upload the ZIP files one at a time. Turn all three on. The [Claude help article](https://support.claude.com/en/articles/12512180) has the details.
 
-Kalau kamu mem-fork repo ini, ganti alamat repo di ketiga `SKILL.md` dan di `kit/README.md` dengan alamat fork-mu, lalu buat ulang ZIP dengan `python3 dist/make_dist.py`.
+You do not install the kit yourself. On first use, the skill clones this repo and installs Blender as a Python module in Claude's workspace (about 1 GB, a few minutes).
 
-## Memakai
+If you fork this repo, replace the repo address in the three `SKILL.md` files and in `kit/README.md` with your fork's address, then rebuild the ZIP files with `python3 dist/make_dist.py`.
 
-Tulis permintaan seperti biasa, misalnya:
+## Use
 
-- "Buat video 3D engineering dari naskah ini: …"
-- "Make a 3D engineering video from this script: …"
-- (dengan video terlampir) "Pelajari video ini, lalu buat video serupa dalam bahasa Indonesia."
+Ask in plain words, for example:
 
-Urutan kerjanya:
+- "Make a 3D engineering video from this script: ..."
+- "Buat video 3D engineering dari naskah ini: ..." (the same request in Indonesian)
+- (with a video attached) "Study this video, then make a similar one in Indonesian."
 
-1. Claude merapikan naskah, mengecek faktanya, dan menyusun rancangan gambar.
-2. Claude berhenti dan meminta persetujuanmu atas batas kredit. Sebelum titik ini tidak ada kredit yang terpakai.
-3. Suara dibuat, waktu tiap kata diukur, scene ditulis sebagai kode dan diperiksa lewat still di CPU dan pemeriksa scene tanpa render.
-4. GPU disewa, semua frame dirender dan diperiksa otomatis, caption dibakar, hasil diunggah, GPU dimatikan.
-5. Kamu menerima link video final, master bersih tanpa caption dan suara, dan laporan biaya.
+What happens next:
 
-## Biaya
+1. Claude tidies the script, checks its facts, and drafts what each line will show.
+2. Claude stops and asks you to approve a credit limit. No credits are spent before this point.
+3. The voice is generated, the timing of every word is measured, and the scene is written as code and checked with CPU stills and a render-free scene checker.
+4. A GPU is rented, every frame is rendered and checked automatically, captions are burned in, the result is uploaded, and the GPU is shut down.
+5. You get a link to the final video, a clean master without captions or sound, and a cost report.
 
-Dalam kredit Higgsfield, terukur pada November 2026. Harga bisa berubah; Claude mengeceknya lagi sebelum meminta persetujuan.
+## Cost
 
-| Video | Suara | GPU | Total | Catatan |
+In Higgsfield credits, measured in November 2026. Prices change, so Claude checks them again before asking for approval.
+
+| Video | Voice | GPU | Total | Notes |
 |---|---|---|---|---|
-| #1, 66 detik | 4,37 | 43,72 | 48,09 | sekali render |
-| #2, 68,4 detik | 16,66 | 132,29 | 148,95 | termasuk audisi suara, satu render yang dibuang (±33), dan satu render ulang sebagian (±20) |
-| #3, 75,9 detik | 6,44 | 110,90 | 117,34 | satu take suara; termasuk dua render ulang sebagian (±26) |
+| #1, 66 s | 4.37 | 43.72 | 48.09 | rendered once |
+| #2, 68.4 s | 16.66 | 132.29 | 148.95 | includes a voice audition, one discarded render (about 33) and one partial re-render (about 20) |
+| #3, 75.9 s | 6.44 | 110.90 | 117.34 | one voice take; includes two partial re-renders (about 26) |
 
-Perkiraan untuk video ±70 detik tanpa kerja ulang: 75–85 kredit GPU (L40S, 71 kredit per jam) ditambah ±6 kredit per take suara. Dua dari tiga video butuh render ulang sebagian, jadi sediakan batas ±1,6 kali perkiraan.
+A video of about 70 seconds with no rework costs 75 to 85 GPU credits (L40S at 71 credits per hour) plus about 6 credits per voice take. Two of the three videos needed a partial re-render, so set the limit at about 1.6 times the estimate.
 
-## Isi repo
+## What is in this repo
 
-| Folder | Isi |
+| Folder | Contents |
 |---|---|
-| [`skills/`](skills/) | tiga `SKILL.md`: `3d-engineering-video` (alur utama), `reference-short-teardown` (membedah video referensi), `higgsfield-blender-render` (render di GPU sewaan) |
-| [`dist/`](dist/) | ZIP tiap skill, siap diunggah ke Claude |
-| [`kit/`](kit/) | kode: pembangun scene Blender, caption, alat suara, skrip render dan QA. Mulai dari [`kit/README.md`](kit/README.md) dan [`kit/GUIDE.md`](kit/GUIDE.md) |
-| [`examples/`](examples/) | tiga job nyata: skrip scene, naskah, waktu per kata, cek fakta |
-| [`docs/`](docs/) | catatan produksi ketiga video, dua contoh hasil bedah video referensi, dan runbook (riwayat cara kerja dan daftar jebakan) |
+| [`skills/`](skills/) | three `SKILL.md` files: `3d-engineering-video` (the main workflow), `reference-short-teardown` (analysing a reference video), `higgsfield-blender-render` (rendering on a rented GPU) |
+| [`dist/`](dist/) | one ZIP per skill, ready to upload to Claude |
+| [`kit/`](kit/) | the code: Blender scene builder, captions, audio tools, render and QA scripts. Start with [`kit/README.md`](kit/README.md) and [`kit/GUIDE.md`](kit/GUIDE.md) |
+| [`examples/`](examples/) | three real jobs: scene script, narration script, word timings, fact check |
+| [`docs/`](docs/) | production records of the three videos, two sample reference teardowns, and the runbook (how the workflow evolved, with a list of pitfalls) |
 
-## Yang perlu kamu tahu sebelum memakai
+## Before you rely on it
 
-- **Masih muda.** Baru tiga video yang dibuat dengan alur ini, dan hanya yang ketiga memakai kit dan skill dari awal sampai akhir. Kit 1.1 memuat pelajaran video itu; dua skrip yang diubah di 1.1 baru diuji di CPU. Mengambil kit dengan `git clone` dari repo ini belum pernah dipakai dalam produksi.
-- **Kerja ulang itu biasa.** Dua dari tiga video butuh render ulang sebagian karena kesalahan animasi yang baru terlihat setelah render penuh. Pemeriksa scene di kit 1.1 dibuat untuk menangkap jenis kesalahan itu sebelum GPU disewa.
-- **Claude tidak mendengar dan tidak menonton.** Yang diperiksa adalah frame diam dan hasil ukur (format, kenyaringan, sinkron kata). Dengarkan dan tonton sendiri hasilnya sebelum diunggah.
-- **Hanya narasi.** Musik dan efek suara tidak dibuat; master bersih disediakan untuk itu.
-- **Video referensi tidak disalin.** Yang diikuti hanya formatnya (durasi, tempo, gaya caption, pola kamera). Naskah ditulis baru dari fakta yang dicek sendiri; footage, audio, dan karakter video referensi tidak dipakai.
-- **Satu format.** 1080×1920, 30 fps.
-- **Lingkungan yang diuji.** Aplikasi Claude dengan workspace cloud dan konektor Higgsfield MCP. Claude Code dan API belum diuji.
+- **It is young.** Only three videos have been made with this workflow, and only the third used the kit and the skills from start to finish. Kit 1.1 contains the lessons from that video. The two scripts changed in 1.1 have been tested on CPU only, and fetching the kit with `git clone` from this repo has not been used in a production yet.
+- **Rework is normal.** Two of the three videos needed a partial re-render because of animation mistakes that only showed up after the full render. The scene checker in kit 1.1 exists to catch that kind of mistake before the GPU is rented.
+- **Claude cannot hear or watch.** It checks still frames and measurements (format, loudness, word sync). Listen to the result and watch it yourself before you publish.
+- **Narration only.** Music and sound effects are not made. The clean master is there so you can add them.
+- **The reference video is not copied.** Only its format is followed: length, pace, caption style, camera pattern. The script is written from scratch using facts that were checked independently, and the reference's footage, audio and characters are not used.
+- **One format.** 1080x1920 at 30 fps.
+- **Tested environment.** The Claude app with a cloud workspace and the Higgsfield MCP connector. Claude Code and the API have not been tested.
+- **Narration and on-screen text of the Indonesian examples are in Indonesian.** They are the content of those videos. Everything else in the repo is in English.
 
-## Keamanan
+## Security
 
-Repo ini tidak memuat kredensial, token, atau data akun. Saat produksi, Claude membuat URL unggah sekali pakai di akun Higgsfield-mu; URL itu hanya hidup di box render dan tidak boleh disimpan di repo atau dokumen (`.gitignore` sudah menyingkirkan `urls.sh`).
+This repo contains no credentials, tokens or account data. During a production, Claude creates single-use upload URLs in your Higgsfield account. Those URLs live only on the render box and must never be saved in the repo or in a document (`.gitignore` already excludes `urls.sh`).
 
-## Lisensi dan kredit
+## License and credits
 
-Lisensi [GPL-3.0-or-later](LICENSE). © 2026 David Alfa Sunarna. Kode dan dokumen ditulis bersama Claude (Anthropic).
+Licensed under [GPL-3.0-or-later](LICENSE). © 2026 David Alfa Sunarna. Code and documents were written together with Claude (Anthropic).
 
-Lisensi GPL dipilih karena skrip scene memanggil API Python Blender, dan Blender meminta skrip semacam itu dibagikan dengan lisensi yang sesuai GPL ([Blender license](https://www.blender.org/about/license/)). Lisensi ini mengatur kode dan dokumen di repo, bukan video yang kamu buat dengannya; untuk suara dan render berlaku ketentuan layanan Higgsfield.
+GPL was chosen because the scene scripts call Blender's Python API, and Blender asks that such scripts be shared under a GPL-compatible license ([Blender license](https://www.blender.org/about/license/)). The license covers the code and documents in this repo, not the videos you make with them. The voice and the rendering are subject to Higgsfield's terms of service.
 
-Blender (`bpy`), ffmpeg, faster-whisper, serta font Inter dan Baloo 2 dipasang atau diunduh saat dipakai dan tidak disertakan di repo. Higgsfield dan ElevenLabs adalah layanan pihak ketiga dengan ketentuannya sendiri. Proyek ini tidak berafiliasi dengan Anthropic, Higgsfield, ElevenLabs, atau Blender Foundation.
+Blender (`bpy`), ffmpeg, faster-whisper, and the Inter and Baloo 2 fonts are installed or downloaded when needed and are not included in this repo. Higgsfield and ElevenLabs are third-party services with their own terms. This project is not affiliated with Anthropic, Higgsfield, ElevenLabs or the Blender Foundation.
