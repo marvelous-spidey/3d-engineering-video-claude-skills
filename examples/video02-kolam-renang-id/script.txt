@@ -1,0 +1,11 @@
+S01|Kalau kamu gali tanah di halaman dan isi dengan air… selamat, kamu punya kolam renang!
+S02|Tapi tanah bukan ember: airnya merembes pergi, dan dindingnya ambruk jadi lumpur.
+S03|Solusinya: besi dirakit seperti keranjang, lalu dicor beton tebal. Jadilah mangkuk raksasa.
+S04|Mangkuk itu harus kuat: isinya hampir lima puluh ton air.
+S05|Beberapa hari kemudian, airnya jadi sup hijau. Ganggang suka air hangat yang diam.
+S06|Jadi airnya harus terus bergerak. Pompa memaksanya menembus tabung berisi pasir; kotoran tersangkut, air lolos. Itulah filter pasir.
+S08|Sayangnya kuman terlalu kecil untuk tersangkut di pasir, dan ganggang terus tumbuh. Untuk mereka, senjatanya kimia: sedikit kaporit.
+S09|Dan kolam yang baunya menyengat? Justru itu yang kotor: itu bau kaporit yang sudah bereaksi dengan keringat… dan pipis.
+S10|Jebakan terakhir: kolamnya kamu kuras. Lima puluh ton pemberat tadi hilang, dan kalau air tanah sedang tinggi, mangkuk kosong itu terdorong naik, seperti ember kosong ditekan ke bak mandi.
+S11|Solusinya aneh: kolam sengaja dibuat bisa bocor ke dalam. Katup kecil di dasarnya membuka saat air tanah menekan terlalu kuat. Air masuk, kolam selamat. Namanya katup hidrostatik.
+S12|Tinggal tambah keramik, lampu, dan bebek karet. Sekarang baru sah: selamat, kamu punya kolam renang!

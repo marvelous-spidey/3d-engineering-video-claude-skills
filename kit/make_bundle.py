@@ -1,0 +1,31 @@
+"""make_bundle.py - pack the small kit files into one Markdown document (kit_tools.md) for the claude.ai Project, and unpack it again.
+  python3 make_bundle.py pack <kit_dir> <kit_tools.md>      every text file of the kit except the three that are Project documents of their own
+  python3 make_bundle.py unpack <kit_tools.md> <kit_dir>    writes the files and checks each one against the MANIFEST (md5)
+In a session attached to the Project the documents are files under /mnt/project (claude_kit_tools.md, claude_kit_explainer_kit.py, ...)."""
+import hashlib, os, re, sys
+SKIP = {'explainer_kit.py', 'make_kit.py', 'ref_teardown.py', 'README.md', 'GUIDE.md', 'API.md', 'make_api.py', 'Baloo2.ttf', 'kit_tools.md'}
+LANGS = {'.py': 'python', '.sh': 'bash', '.json': 'json', '.txt': 'text', '.env': 'bash', '.example': 'bash', '.md': 'markdown'}
+PAT = re.compile(r"^## `([^`]+)`\n\n````[a-z]*\n(.*?)\n````$", re.S | re.M)
+def md5(s): return hashlib.md5(s.encode('utf8')).hexdigest()
+if sys.argv[1] == 'pack':
+    kit, out = sys.argv[2], sys.argv[3]; files = []
+    for root, dirs, names in os.walk(kit):
+        dirs[:] = sorted(d for d in dirs if d not in ('__pycache__', 'regress', 'skills')); rel = os.path.relpath(root, kit)
+        for n in sorted(names):
+            p = n if rel == '.' else rel + '/' + n
+            if n in SKIP or n.endswith('.pyc'): continue
+            s = open(os.path.join(kit, p), encoding='utf8').read().rstrip('\n') + '\n'; open(os.path.join(kit, p), 'w', encoding='utf8').write(s)
+            assert '\n````' not in s, p; files.append((p, s))
+    version = open(os.path.join(kit, 'VERSION')).read().strip()
+    doc = [f'# Kit {version} - berkas-berkas kecil dalam satu dokumen', '',
+           'Isi: berkas kit selain `explainer_kit.py`, `make_kit.py`, `ref_teardown.py`, `README.md`, dan `GUIDE.md` (dokumen Project tersendiri) serta `API.md` dan `make_api.py` (hanya di folder lokal). Cara pakai kit ada di `kit_README.md`.',
+           'Dokumen ini dibuat oleh `make_bundle.py pack`; jangan disunting tangan. Membuka: `python3 make_bundle.py unpack kit_tools.md <folder>` atau potongan kode di `kit_README.md`.', '',
+           '## MANIFEST', '', '```text'] + [f'{md5(s)[:12]}  {p}' for p, s in files] + ['```', '']
+    for p, s in files: doc += [f'## `{p}`', '', '````' + LANGS.get(os.path.splitext(p)[1], 'text'), s.rstrip('\n'), '````', '']
+    open(out, 'w', encoding='utf8').write('\n'.join(doc)); print('packed', len(files), 'files ->', out, os.path.getsize(out), 'bytes')
+else:
+    src = open(sys.argv[2], encoding='utf8').read(); out = sys.argv[3]; man = dict((b, a) for a, b in re.findall(r'^([0-9a-f]{12})  (\S+)$', src, re.M)); bad = []
+    for p, body in PAT.findall(src):
+        q = os.path.join(out, p); os.makedirs(os.path.dirname(q) or '.', exist_ok=True); open(q, 'w', encoding='utf8').write(body + '\n')
+        if md5(body + '\n')[:12] != man.get(p): bad.append(p)
+    print('unpacked', len(PAT.findall(src)), 'files of', len(man), 'in the manifest ->', out, '| md5 mismatches:', bad or 'none')

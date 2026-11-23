@@ -1,0 +1,22 @@
+S01|Mesin Honda CR-V / dua koma empat liter / aslinya cuma / seratus enam puluh / tenaga kuda.
+S02|Di tangan tuner, / mesin seri yang sama / bisa tembus seribu.
+S03|Caranya: / pasang turbo raksasa, / lalu kalahkan / tiga musuh.
+S04|Musuh pertama, / tekanan.
+S05|Turbo memompa udara / sampai dua bar lebih, / dan ledakan di silinder / makin keras.
+S06|Piston cor bawaan / bisa retak, / setangnya bisa bengkok.
+S07|Jadi keduanya diganti / versi tempa.
+S08|Kepala silinder / ikut terangkat, / maka bautnya diganti / stud baja.
+S09|Dinding silindernya / berdiri sendiri / di tengah air pendingin, / tanpa penopang.
+S10|Solusinya, / tanam selongsong / besi tebal.
+S11|Musuh kedua, / putaran.
+S12|Kepala silinder CR-V / dirancang irit, / napasnya habis di / enam ribu lima ratus rpm.
+S13|Tuner menukarnya / dengan kepala / Civic Type R, / yang VTEC-nya ada / di kedua noken as.
+S14|Blok besar, / kepala galak: / julukannya Frankenstein.
+S15|Di atas sembilan ribu rpm, / per klep kewalahan, / dan klep bisa / dihantam piston.
+S16|Jadi per diganti / yang lebih keras, / dan klep buang / memakai Inconel / tahan panas.
+S17|Musuh ketiga, / panas.
+S18|Udara mampat itu panas, / sampai bensin meledak / sebelum waktunya. / Mekanik menyebutnya / ngelitik.
+S19|Maka udara / didinginkan intercooler, / dan bensin / diganti etanol.
+S20|Hasilnya, / lebih dari seribu / tenaga kuda di hampir / sepuluh ribu rpm.
+S21|Yang tersisa dari / mesin aslinya? / Bloknya, / dan kruk as / bawaan pabrik.
+S22|Mesin mobil keluarga, / enam kali lipat / tenaganya.

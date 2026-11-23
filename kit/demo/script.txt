@@ -1,0 +1,2 @@
+S01|Tandon di atap menyimpan air untuk seisi rumah.
+S02|Pompa mendorong air naik, lalu gravitasi mengalirkannya turun ke keran.

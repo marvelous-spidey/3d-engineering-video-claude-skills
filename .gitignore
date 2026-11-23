@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Secrets and one-time upload URLs made during a production: never commit these
+urls.sh
+.env
+*.pem
+*.key
+
+# Media and render output of a job (large; keep them outside the repo)
+*.wav
+*.mp3
+*.mp4
+*.mov
+*.blend
+*.blend1
+*.npy
+frames/
+st/
+stills/
+logs/
+qa/
+job.zip
+sheets.zip
+trips.zip
+Baloo2.ttf

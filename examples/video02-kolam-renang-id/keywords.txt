@@ -1,0 +1,21 @@
+# key words shown in yellow: sentence id, word, which occurrence
+S01 kolam
+S01 renang
+S03 beton
+S04 lima
+S04 puluh
+S04 ton
+S05 hijau
+S05 ganggang
+S06 filter
+S06 pasir 2
+S08 kuman
+S08 kaporit
+S09 pipis
+S10 terdorong
+S10 naik
+S11 katup 2
+S11 hidrostatik
+S12 selamat
+S12 kolam
+S12 renang

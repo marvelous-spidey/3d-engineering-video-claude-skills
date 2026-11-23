@@ -1,0 +1,16 @@
+S01|No sewer / on your street? / Then your own yard / has to handle / every flush.
+S02|Let's build / the thing / that does it.
+S03|Start with a hole. / Pipe the toilet / into it.
+S04|Problem: / sewage seeps / into the ground, / and toward / your well.
+S05|So you seal / the hole / with concrete.
+S06|Now nothing leaks. / But nothing leaves, / and it fills up / in days.
+S07|So you add / an outlet pipe.
+S08|Problem: / solids flow out too, / and clog / whatever comes next.
+S09|So you add a wall, / and slow / the water down.
+S10|Heavy solids / sink as sludge. / Grease floats up / as scum.
+S11|Only the / clearer water / in the middle / moves on.
+S12|It still isn't clean. / So perforated pipes / spread it / through gravel, / and the soil / filters the rest.
+S13|Bacteria in the tank / make gas. / It vents back / through the plumbing, / out above / your roof.
+S14|And they can't / digest everything. / So every / three to five years, / a truck / pumps out / the sludge.
+S15|That's a / septic system. / One in five / American homes / runs on one.
+S16|What should we / build next?

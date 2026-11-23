@@ -1,0 +1,3 @@
+# key words shown in yellow: sentence id, word, which occurrence (default 1)
+S01 tandon
+S02 gravitasi
