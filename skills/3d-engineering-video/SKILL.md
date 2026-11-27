@@ -18,7 +18,7 @@ Reply to the user in the language they write in. English and Indonesian narratio
 1. Install the kit to `~/kit`:
 
    ```bash
-   REPO=https://github.com/davidalfasunarna/3d-engineering-video-claude-skills
+   REPO=https://[github.com/davidalfasunarna/3d-engineering-video-claude-skills](https://github.com/marvelous-spidey/3d-engineering-video-claude-skills)
    [ -f ~/kit/VERSION ] || { git clone --depth 1 "$REPO" ~/3dv-repo && cp -r ~/3dv-repo/kit ~/kit; }
    cat ~/kit/VERSION
    ```
