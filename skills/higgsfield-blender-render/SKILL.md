@@ -36,7 +36,7 @@ Call rule: a command that waits longer than about 60 seconds fails with "Bad Gat
 1. **Package the job in the sandbox.** The folder `/home/user/jobs/<name>/` already holds `vo_proc.wav` and `words.json` from the voice step. Send the job's own files that are missing or whose md5 differs: `job.env`, the scene script, `script.txt`, `keywords.txt`. Then add the kit code and the font:
 
    ```bash
-   cd /home/user && { [ -d 3dv-repo ] || git clone --depth 1 https://github.com/davidalfasunarna/3d-engineering-video-claude-skills 3dv-repo; }
+   cd /home/user && { [ -d 3dv-repo ] || git clone --depth 1 https://[github.com/davidalfasunarna/3d-engineering-video-claude-skills](https://github.com/marvelous-spidey/3d-engineering-video-claude-skills) 3dv-repo; }
    bash 3dv-repo/kit/newjob.sh jobs/<name>
    ```
 
