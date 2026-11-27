@@ -5,7 +5,7 @@ This kit is the code used by the skills `3d-engineering-video`, `reference-short
 ## Install
 
 ```bash
-git clone --depth 1 https://github.com/davidalfasunarna/3d-engineering-video-claude-skills ~/3dv-repo
+git clone --depth 1 https://github.com/marvelous-spidey/3d-engineering-video-claude-skills ~/3dv-repo
 cp -r ~/3dv-repo/kit ~/kit
 pip install --break-system-packages bpy==5.3.0 pillow numpy    # Blender as a Python module; needs Python 3.13, about 1 GB
 bash ~/kit/selftest.sh                                          # 3 to 10 minutes on CPU, no credits; must end with SELFTEST PASSED
